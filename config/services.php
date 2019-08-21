@@ -44,4 +44,10 @@ return [
         ],
     ],
 
+    'kakao' => [
+        'client_id' => env('KAKAO_KEY'),
+        'client_secret' => env('KAKAO_SECRET'),
+        'redirect' => env('KAKAO_REDIRECT_URI')
+    ],
+
 ];
