@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateBookmarkCateoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('bookmark_cateories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('join_type')->comment('kakao, facebook, google');
-            $table->string('sns_id');
-            $table->string('name');
-            $table->string('profile_image')->nullable();
+            $table->unsignedInteger('user_id');
+            $table->string('name')->comment('카테고리 명');
+            $table->integer('rank')->default(1)->comment('카테고리 순서');
             $table->timestamps();
         });
-
-
-        // refresh는 데이터가
     }
 
     /**
@@ -33,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('bookmark_cateories');
     }
 }

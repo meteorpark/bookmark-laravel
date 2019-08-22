@@ -3,25 +3,93 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client as HttpClient;
 
+use Goutte\Client;
+use GuzzleHttp\Client as GuzzleClient;
+use Exception;
+use Symfony\Component\DomCrawler\Crawler;
 
+/**
+ * Class CrawlerService
+ * @package App\Services
+ */
 class CrawlerService
 {
 
-    private $httpClient;
+    /**
+     * @var Client
+     */
+    private $client;
+    /**
+     * @var string
+     */
+    private $url;
 
+    /**
+     * CrawlerService constructor.
+     */
     public function __construct()
     {
-        $this->httpClient = new HttpClient();
+        $this->client = new Client();
+        $guzzleClient = new GuzzleClient([
+            'timeout' => 3,
+        ]);
+        $this->client->setClient($guzzleClient);
     }
 
 
-
-    public function websiteParsing(string $url)
+    /**
+     * @param string $url
+     * @return array
+     */
+    public function crawler(string $url): array
     {
-        $response = $this->httpClient->get($url);
+        $this->url = $url;
 
-        return json_decode($response->getBody(), true);
+        try {
+
+            $data = $this->parsing();
+            return $this->parser($data);
+
+        } catch (Exception $e) {
+
+            return [];
+        }
+    }
+
+    /**
+     * @return Crawler
+     */
+    private function parsing(): Crawler
+    {
+        return $this->client->request("GET", $this->url);
+    }
+
+    /**
+     * @param Crawler $data
+     * @return array
+     */
+    private function parser(Crawler $data): array
+    {
+        $tags = [
+            'site_name' => '',
+            'title' => '',
+            'image' => '',
+            'url' => '',
+            'description' => '',
+        ];
+
+        foreach (array_keys($tags) as $tag) {
+
+            try {
+                $tags[$tag] = $data->filterXpath('//meta[@property="og:' . $tag . '"]')->attr('content');
+
+            } catch (Exception $e) {
+
+                $tags[$tag] = "";
+            }
+        }
+
+        return $tags;
     }
 }

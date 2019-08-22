@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Services\CrawlerService;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,13 +23,12 @@ class CrawlerServiceTest extends TestCase
     /**
      * @test
      */
-    public function websiteParsing()
+    public function crawler_with_url()
     {
 
-        $crawler = new \App\Services\CrawlerService();
-
-        $url = "http://www.zdnet.co.kr/view/?no=20190821142500";
-
-        \Log::info($crawler->websiteParsing($url));
+        $crawler = new CrawlerService();
+        $url = "https://www.youtube.com/watch?v=m-H23F7IED8&feature=youtu.be";
+        $data = $crawler->crawler($url);
+        $this->assertIsArray($data);
     }
 }
