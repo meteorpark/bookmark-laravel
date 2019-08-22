@@ -8,13 +8,6 @@ use App\Jobs\ProcessBookmark;
 use App\Models\Bookmark;
 
 
-/**
- * @OA\Info(
- *  description="",
- *        version="3.0.0",
- *        title="Food App API",
- *  )
- */
 class BookmarkController extends Controller
 {
 
@@ -32,7 +25,6 @@ class BookmarkController extends Controller
      *    tags={"북마크"},
      *   summary="내가 북마크한 내용을 조회",
      *  operationId="login",
-
      *      @OA\Response(
      *         response=401,
      *        description="Unauthorized"

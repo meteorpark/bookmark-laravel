@@ -25,6 +25,24 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Post(path="/api/v1/users",
+     *   tags={"user"},
+     *   summary="유저생성",
+     *   description="유저생성",
+     *   operationId="createUser",
+     *   @OA\Parameter(
+     *   name="password",
+     *   in="query",
+     *   required=true,
+     *   @OA\Schema(
+     *      type="string"
+     *      )
+     *   ),
+     *   @OA\Response(response="default", description="successful operation")
+     * )
+     */
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
