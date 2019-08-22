@@ -1,0 +1,30 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Food App API",
+        "description": "",
+        "version": "3.0.0"
+    },
+    "paths": {
+        "/api/v1/bookmark": {
+            "get": {
+                "tags": [
+                    "북마크"
+                ],
+                "summary": "내가 북마크한 내용을 조회",
+                "operationId": "login",
+                "responses": {
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        }
+    }
+}

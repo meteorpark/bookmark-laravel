@@ -7,9 +7,13 @@ use App\Http\Resources\BookmarkCollection;
 use App\Jobs\ProcessBookmark;
 use App\Models\Bookmark;
 
+
 /**
- * Class BookmarkController
- * @package App\Http\Controllers
+ * @OA\Info(
+ *  description="",
+ *        version="3.0.0",
+ *        title="Food App API",
+ *  )
  */
 class BookmarkController extends Controller
 {
@@ -22,6 +26,32 @@ class BookmarkController extends Controller
     }
 
 
+    /**
+     * @OA\GET(
+     *     path="/api/v1/bookmark",
+     *    tags={"북마크"},
+     *   summary="내가 북마크한 내용을 조회",
+     *  operationId="login",
+
+     *      @OA\Response(
+     *         response=401,
+     *        description="Unauthorized"
+     *   ),
+     *          @OA\Response(
+     *              response=400,
+     *              description="Invalid request"
+     *         ),
+     *        @OA\Response(
+     *           response=404,
+     *          description="not found"
+     *     ),
+     *)
+     */
+
+    /**
+     * @param storeBookmarkRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(storeBookmarkRequest $request)
     {
 
@@ -37,6 +67,9 @@ class BookmarkController extends Controller
     }
 
 
+    /**
+     * @return BookmarkCollection
+     */
     public function index()
     {
         return new BookmarkCollection(Bookmark::paginate());
