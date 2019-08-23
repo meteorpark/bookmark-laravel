@@ -15,7 +15,7 @@
     },
     "servers": [
         {
-            "url": "https://api-bookmark.meteopark.dev/api/documentation",
+            "url": "https://api-bookmark.meteopark.dev",
             "description": "REST API Host"
         }
     ],
