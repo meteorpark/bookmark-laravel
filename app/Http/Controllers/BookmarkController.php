@@ -19,26 +19,7 @@ class BookmarkController extends Controller
     }
 
 
-    /**
-     * @OA\GET(
-     *     path="/api/v1/bookmark",
-     *    tags={"북마크"},
-     *   summary="내가 북마크한 내용을 조회",
-     *  operationId="login",
-     *      @OA\Response(
-     *         response=401,
-     *        description="Unauthorized"
-     *   ),
-     *          @OA\Response(
-     *              response=400,
-     *              description="Invalid request"
-     *         ),
-     *        @OA\Response(
-     *           response=404,
-     *          description="not found"
-     *     ),
-     *)
-     */
+
 
     /**
      * @param storeBookmarkRequest $request

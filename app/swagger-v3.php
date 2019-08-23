@@ -6,7 +6,7 @@
  *     @OA\Info(
  *         version="1.0.0",
  *         title="나만의 공유노트 API",
- *         description="This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+ *         description="Team.AM의 첫번째 프로젝트 입니다. [https://github.com/meteopark/url-drawer-laravel]",
  *         termsOfService="http://swagger.io/terms/",
  *         @OA\Contact(
  *             email="rzip84@gmail.com"
@@ -17,7 +17,7 @@
  *         )
  *     ),
  *     @OA\Server(
- *         description="RestApis Host",
+ *         description="REST API Host",
  *         url="https://api-bookmark.meteopark.dev/api/documentation"
  *     ),
  *     @OA\ExternalDocumentation(

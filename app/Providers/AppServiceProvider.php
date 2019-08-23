@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
         //
 
         $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
+        $this->app->register(BackendServiceProvider::class);
 
     }
 

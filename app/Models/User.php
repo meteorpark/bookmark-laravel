@@ -17,22 +17,4 @@ class User extends Model
     protected $guarded = [
         'id',
     ];
-
-
-    /**
-     * @var array
-     */
-    protected $hidden = [
-        'id',
-    ];
-
-
-    public function getProfileImageAttribute($value)
-    {
-
-        return $value ?? "hihihihi";
-//        $this->attributes['profile_image'] = "Ddd";
-
-    }
-
 }
