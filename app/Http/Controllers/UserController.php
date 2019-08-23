@@ -42,55 +42,27 @@ class UserController extends Controller
     /**
      * @OA\Post(
      *      path="/api/v1/users",
-     *      tags={"user"},
+     *      tags={"User"},
      *      summary="회원가입",
      *      description="회원가입",
      *      operationId="store",
-     *      @OA\Parameter(
-     *          name="join_type",
+     *      @OA\RequestBody(
+     *          description="",
      *          required=true,
-     *          in="query",
-     *          @OA\Schema(
-     *              type="string",
-     *              enum={"kakao", "google", "facebook"},
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="sns_id",
-     *          required=true,
-     *          in="query",
-     *          description="SNS unique id",
-     *          @OA\Schema(
-     *              type="string",
-     *          ),
-     *      ),
-     *      @OA\Parameter(
-     *          name="name",
-     *          required=true,
-     *          in="query",
-     *          description="Nickname or User's name",
-     *          @OA\Schema(
-     *              type="string",
-     *          ),
-     *      ),
-     *      @OA\Parameter(
-     *          name="profile_image",
-     *          required=true,
-     *          in="path",
-     *          description="profile image url",
-     *          @OA\Schema(
-     *              type="string",
-     *          ),
+     *          @OA\MediaType(mediaType="multipart/form-data", @OA\Schema(ref="#/components/schemas/User"))
      *      ),
      *      @OA\Response(response=201, description="successful operation"),
-     *      @OA\Response(response=400, description="input error"),
-     *  )
+     *      @OA\Response(response=401, description="input error"),
+     * )
+     *
+     *
      * @param storeUserCreate $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(storeUserCreate $request)
     {
         $data = $request->all();
+
         $user = $this->user->getSnsId($data['sns_id']);
         if (!$user) {
 

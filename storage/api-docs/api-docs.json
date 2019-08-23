@@ -13,70 +13,68 @@
         },
         "version": "1.0.0"
     },
-    "servers": [
-        {
-            "url": "https://api-bookmark.meteopark.dev",
-            "description": "REST API Host"
-        }
-    ],
     "paths": {
         "/api/v1/users": {
             "post": {
                 "tags": [
-                    "user"
+                    "User"
                 ],
-                "summary": "유저생성",
-                "description": "유저를 만들어 봅시다..",
+                "summary": "회원가입",
+                "description": "회원가입",
                 "operationId": "store",
-                "parameters": [
-                    {
-                        "name": "join_type",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "kakao",
-                                "google",
-                                "facebook"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "sns_id",
-                        "in": "query",
-                        "description": "SNS unique id",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "name",
-                        "in": "query",
-                        "description": "Nickname or User's name",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "profile_image",
-                        "in": "path",
-                        "description": "profile image url",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "successful operation"
                     },
-                    "400": {
+                    "401": {
                         "description": "input error"
                     }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "required": [
+                    "join_type",
+                    "sns_id",
+                    "profile_image",
+                    "name"
+                ],
+                "properties": {
+                    "join_type": {
+                        "type": "string",
+                        "enum": [
+                            "kakao",
+                            "facebook",
+                            "google"
+                        ]
+                    },
+                    "sns_id": {
+                        "type": "string"
+                    },
+                    "profile_image": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
                 }
             }
         }
