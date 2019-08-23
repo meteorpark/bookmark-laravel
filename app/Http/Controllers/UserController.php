@@ -6,6 +6,7 @@ use App\Http\Requests\storeUserCreate;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * Class UserController
@@ -68,6 +69,8 @@ class UserController extends Controller
 
             $user = $this->user->create($data);
         }
+
+        $user->setAttribute('token', JWTAuth::fromUser($user));
 
         return response()->json(new UserResource($user), 201);
     }
