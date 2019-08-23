@@ -43,8 +43,8 @@ class UserController extends Controller
      * @OA\Post(
      *      path="/api/v1/users",
      *      tags={"user"},
-     *      summary="유저생성",
-     *      description="유저를 만들어 봅시다..",
+     *      summary="회원가입",
+     *      description="회원가입",
      *      operationId="store",
      *      @OA\Parameter(
      *          name="join_type",
