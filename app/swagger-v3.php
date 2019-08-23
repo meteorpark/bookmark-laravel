@@ -18,7 +18,7 @@
  *     ),
  *     @OA\Server(
  *         description="REST API Host",
- *         url="https://api-bookmark.meteopark.dev/api/documentation"
+ *         url="https://api-bookmark.meteopark.dev"
  *     ),
  *     @OA\ExternalDocumentation(
  *         description="Find out more about Swagger",
