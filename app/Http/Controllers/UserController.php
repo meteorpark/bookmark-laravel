@@ -48,7 +48,7 @@ class UserController extends Controller
      *              @OA\Schema(ref="#/components/schemas/UserCreate"))
      *      ),
      *      @OA\Response(response=201, description="successful operation"),
-     *      @OA\Response(response=401, description="input error"),
+     *      @OA\Response(response=400, description="input error"),
      * )
      *
      *
@@ -100,11 +100,11 @@ class UserController extends Controller
         if ($user) {
             if (!$token = auth()->fromUser($user)) {
 
-                return response()->json(['status' => 'unauthorized', 'errors' => ''], 401);
+                return response()->json(['status' => 'unauthorized', 'errors' => new \stdClass()], 401);
             }
         } else {
 
-            return response()->json(['status' => 'unknown user', 'errors' => ''], 409);
+            return response()->json(['status' => 'unknown user', 'errors' => new \stdClass()], 409);
         }
 
         $user->setAttribute('token', $this->generateToken($user));

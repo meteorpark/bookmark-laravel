@@ -14,7 +14,7 @@
 
 
 Route::get('unauthenticated', function () {
-    return response()->json(['status' => 'unauthenticated', 'errors' => []], 401);
+    return response()->json(['status' => 'unauthenticated', 'errors' => new stdClass()], 401);
 })->name('unauthenticated');
 
 Route::prefix('v1')->group(function () {
