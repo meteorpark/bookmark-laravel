@@ -1,11 +1,11 @@
 <?php
-
+// php artisan l5-swagger:generate
 
 /**
  * @OA\OpenApi(
  *     @OA\Info(
  *         version="1.0.0",
- *         title="나만의 공유노트 API",
+ *         title="서랍 API",
  *         description="Team.AM의 첫번째 프로젝트 입니다. [https://github.com/meteopark/bookmark-laravel](https://github.com/meteopark/bookmark-laravel)",
  *         termsOfService="http://swagger.io/terms/",
  *         @OA\Contact(

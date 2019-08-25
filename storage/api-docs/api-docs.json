@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "나만의 공유노트 API",
-        "description": "Team.AM의 첫번째 프로젝트 입니다. [https://github.com/meteopark/url-drawer-laravel]",
+        "title": "서랍 API",
+        "description": "Team.AM의 첫번째 프로젝트 입니다. [https://github.com/meteopark/bookmark-laravel](https://github.com/meteopark/bookmark-laravel)",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "email": "rzip84@gmail.com"
@@ -28,7 +28,7 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "$ref": "#/components/schemas/UserCreate"
                             }
                         }
                     }
@@ -42,11 +42,43 @@
                     }
                 }
             }
+        },
+        "/api/v1/users/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "로그인",
+                "description": "로그인",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    },
+                    "409": {
+                        "description": "unknown user"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
-            "User": {
+            "UserCreate": {
                 "required": [
                     "join_type",
                     "sns_id",
@@ -70,11 +102,30 @@
                     },
                     "name": {
                         "type": "string"
+                    },
+                    "id": {}
+                },
+                "type": "object",
+                "xml": {
+                    "name": "UserCreate"
+                }
+            },
+            "UserLogin": {
+                "required": [
+                    "sns_id",
+                    "join_type"
+                ],
+                "properties": {
+                    "join_type": {
+                        "type": "string"
+                    },
+                    "sns_id": {
+                        "type": "string"
                     }
                 },
                 "type": "object",
                 "xml": {
-                    "name": "User"
+                    "name": "UserCreate"
                 }
             }
         }

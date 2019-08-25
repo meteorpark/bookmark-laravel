@@ -15,16 +15,17 @@
 
 Route::prefix('v1')->group(function () {
 
-    Route::prefix('users')->group(function () {
 
+    Route::prefix('users')->middleware(['api'])->group(function () {
         Route::post('/', 'UserController@store'); // 회원가입
-        Route::get('/users/{id}', 'UserController@show'); // 회원조회
-
-
+        Route::post('/login', 'UserController@login'); // 로그인
+        // 로그아웃
+        //refresh
+        // 나 조회
     });
-
-    Route::post('/bookmark', 'BookmarkController@store'); // 공유하기
-    Route::get('/bookmark', 'BookmarkController@index'); // 카테고리의 공유항목 가져오기
 });
 
+
+//Route::post('/bookmark', 'BookmarkController@store'); // 공유하기
+//Route::get('/bookmark', 'BookmarkController@index'); // 카테고리의 공유항목 가져오기
 

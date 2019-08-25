@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 /**
- * @OA\Schema(required={"join_type", "sns_id", "profile_image", "name"}, @OA\Xml(name="User"))
- *
  * Class User
  * @package App\Models
  */
-class User extends Model implements JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
+    use Notifiable;
 
     /**
      * @var array
@@ -22,32 +24,13 @@ class User extends Model implements JWTSubject
         'id',
     ];
 
+    /**
+     * @var array
+     */
     protected $hidden = [
         'id', 'updated_at', 'sns_id',
     ];
-
-
-    /**
-     * @OA\Property(enum={"kakao", "facebook", "google"})
-     * @var string
-     */
-    private $join_type;
-    /**
-     * @OA\Property()
-     * @var string
-     */
-    private $sns_id;
-    /**
-     * @OA\Property()
-     * @var string
-     */
-    private $profile_image;
-    /**
-     * @OA\Property()
-     * @var string
-     */
-    private $name;
-
+    
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

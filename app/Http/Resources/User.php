@@ -21,7 +21,6 @@ class User extends JsonResource
             'join_type' => $this->join_type,
             'name' => $this->name,
             'profile_image' => $this->profile_image,
-            'created_at' => (string)$this->created_at,
             'token' => $this->token,
         ];
     }
