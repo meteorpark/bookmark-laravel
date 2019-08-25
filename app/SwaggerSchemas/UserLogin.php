@@ -8,7 +8,7 @@ class UserLogin
 {
 
     /**
-     * @OA\Property()
+     * @OA\Property(enum={"kakao", "facebook", "google"})
      * @var string
      */
     private $join_type;

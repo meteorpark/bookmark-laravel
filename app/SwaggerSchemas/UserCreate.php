@@ -28,9 +28,4 @@ class UserCreate
      */
     private $name;
 
-    /**
-     * @OA\Property()
-     * @var
-     */
-    private $id;
 }

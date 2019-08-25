@@ -13,15 +13,16 @@
 */
 
 
+Route::get('unauthenticated', function () {
+    return response()->json(['status' => 'unauthenticated', 'errors' => []], 401);
+})->name('unauthenticated');
+
 Route::prefix('v1')->group(function () {
 
 
     Route::prefix('users')->middleware(['api'])->group(function () {
         Route::post('/', 'UserController@store'); // 회원가입
-        Route::post('/login', 'UserController@login'); // 로그인
-        // 로그아웃
-        //refresh
-        // 나 조회
+        Route::post('/login', 'UserController@login')->name('login'); // 로그인
     });
 });
 

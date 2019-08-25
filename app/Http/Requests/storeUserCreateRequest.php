@@ -8,10 +8,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Class storeUserCreate
+ * Class storeUserCreateRequest
  * @package App\Http\Requests
  */
-class storeUserCreate extends FormRequest
+class storeUserCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

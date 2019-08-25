@@ -102,8 +102,7 @@
                     },
                     "name": {
                         "type": "string"
-                    },
-                    "id": {}
+                    }
                 },
                 "type": "object",
                 "xml": {
@@ -117,7 +116,12 @@
                 ],
                 "properties": {
                     "join_type": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "kakao",
+                            "facebook",
+                            "google"
+                        ]
                     },
                     "sns_id": {
                         "type": "string"

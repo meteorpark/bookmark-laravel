@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
-class storeBookmarkRequest extends FormRequest
+class loginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +27,20 @@ class storeBookmarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' =>  'required',
-            'category_id' => 'required',
-            'url' => 'required',
+            'join_type' => 'required|in:kakao,facebook,google',
+            'sns_id' => 'required',
         ];
     }
 
+    /**
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [
+            'join_type.required' => '허용 가능한 접근은 kakao, facebook, google 입니다.',
+        ];
+    }
 
     public function failedValidation(Validator $validator)
     {
@@ -41,7 +49,7 @@ class storeBookmarkRequest extends FormRequest
             'status' => 'input_error',
             'errors' => $validator->errors()
         ];
-        $response = new JsonResponse( $json, 400 );
+        $response = new JsonResponse($json, 400);
         throw (new ValidationException($validator, $response))->status(400);
     }
 }

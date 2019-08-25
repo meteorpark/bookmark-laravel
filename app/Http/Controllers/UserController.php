@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\storeUserCreate;
+use App\Http\Requests\loginRequest;
+use App\Http\Requests\storeUserCreateRequest;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function __construct(UserRepositoryInterface $user)
     {
-//        $this->middleware('api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'store']]);
         $this->user = $user;
     }
 
@@ -52,10 +52,10 @@ class UserController extends Controller
      * )
      *
      *
-     * @param storeUserCreate $request
+     * @param storeUserCreateRequest $request
      * @return JsonResponse
      */
-    public function store(storeUserCreate $request): JsonResponse
+    public function store(storeUserCreateRequest $request): JsonResponse
     {
         $data = $request->all();
 
@@ -64,11 +64,10 @@ class UserController extends Controller
             $user = $this->user->create($data);
         }
 
-        $user->setAttribute('token', JWTAuth::fromUser($user));
+        $user->setAttribute('token', $this->generateToken($user));
 
         return response()->json(new UserResource($user), 201);
     }
-
 
     /**
      * @OA\Post(
@@ -89,48 +88,39 @@ class UserController extends Controller
      *      @OA\Response(response=409, description="unknown user"),
      * )
      *
-     * @param storeUserCreate $request
-     * @return JsonResponse
      */
     /**
+     * @param loginRequest $request
      * @return JsonResponse
      */
-    public function login(Request $request): JsonResponse
+    public function login(loginRequest $request): JsonResponse
     {
-        $user = User::where('sns_id', $request->sns_id)->first();
+        $user = User::where('sns_id', $request->sns_id)->where('join_type', $request->join_type)->first();
 
         if ($user) {
             if (!$token = auth()->fromUser($user)) {
 
-                return response()->json(['error' => 'Unauthorized'], 401);
+                return response()->json(['status' => 'unauthorized', 'errors' => ''], 401);
             }
         } else {
 
-            return response()->json(['error' => 'Unknown user'], 409);
+            return response()->json(['status' => 'unknown user', 'errors' => ''], 409);
         }
 
-        $user->setAttribute('token', $this->respondWithToken($token));
+        $user->setAttribute('token', $this->generateToken($user));
+
         return response()->json(new UserResource($user), 200);
     }
 
     /**
-     * @param string $token
-     * @return string
+     * @param $user
+     * @return mixed
      */
-    protected function respondWithToken(string $token): string
+    protected function generateToken($user)
     {
-        auth()->factory()->getTTL() * 60;
-        return $token;
+        return JWTAuth::fromUser($user);
     }
 
-
-    /**
-     * @return JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
 
     /**
      * @return JsonResponse
@@ -138,7 +128,7 @@ class UserController extends Controller
     public function logout()
     {
         auth()->logout();
-        return response()->json(['message' => 'Successfully logged out']);
+//        return response()->json(['message' => 'Successfully logged out']);
     }
 
 
