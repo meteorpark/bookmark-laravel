@@ -9,7 +9,6 @@ use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\User as UserResource;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserController
@@ -120,6 +119,13 @@ class UserController extends Controller
     {
         return JWTAuth::fromUser($user);
     }
+
+
+
+
+
+
+
 
 
     /**

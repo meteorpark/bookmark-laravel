@@ -28,9 +28,9 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'id', 'updated_at', 'sns_id',
+        'updated_at', 'sns_id',
     ];
-    
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *

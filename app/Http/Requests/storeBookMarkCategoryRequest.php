@@ -27,9 +27,7 @@ class storeBookMarkCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' =>  'required',
-            'category_id' => 'required',
-            'url' => 'required',
+            'name' => 'required',
         ];
     }
 
@@ -41,7 +39,7 @@ class storeBookMarkCategoryRequest extends FormRequest
             'status' => 'input_error',
             'errors' => $validator->errors()
         ];
-        $response = new JsonResponse( $json, 400 );
+        $response = new JsonResponse($json, 400);
         throw (new ValidationException($validator, $response))->status(400);
     }
 }

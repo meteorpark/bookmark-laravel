@@ -17,13 +17,22 @@ Route::get('unauthenticated', function () {
     return response()->json(['status' => 'unauthenticated', 'errors' => new stdClass()], 401);
 })->name('unauthenticated');
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware(['api'])->group(function () {
 
 
-    Route::prefix('users')->middleware(['api'])->group(function () {
+    Route::prefix('users')->group(function () {
         Route::post('/', 'UserController@store'); // 회원가입
         Route::post('/login', 'UserController@login')->name('login'); // 로그인
+
     });
+
+    Route::post('/bookmarks/category', 'BookMarkCategoryController@store'); // 카테고리 추가
+    Route::get('/bookmarks/category', 'BookMarkCategoryController@show'); // 카테고리 조회
+
+
+
+
+
 });
 
 

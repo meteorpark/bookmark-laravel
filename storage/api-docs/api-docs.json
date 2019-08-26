@@ -14,6 +14,68 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/bookmarks/category": {
+            "get": {
+                "tags": [
+                    "BookmarkCategory"
+                ],
+                "summary": "카테고리 조회",
+                "description": "카테고리 조회",
+                "operationId": "store",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "access token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    },
+                    "409": {
+                        "description": "unknown user"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "BookmarkCategory"
+                ],
+                "summary": "카테고리 생성",
+                "description": "카테고리 생성",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookmarkCategoryCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    },
+                    "409": {
+                        "description": "unknown user"
+                    }
+                }
+            }
+        },
         "/api/v1/users": {
             "post": {
                 "tags": [
@@ -78,6 +140,24 @@
     },
     "components": {
         "schemas": {
+            "BookmarkCategoryCreate": {
+                "required": [
+                    "name",
+                    "token"
+                ],
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BookmarkCategoryCreate"
+                }
+            },
             "UserCreate": {
                 "required": [
                     "join_type",
@@ -130,6 +210,25 @@
                 "type": "object",
                 "xml": {
                     "name": "UserCreate"
+                }
+            }
+        },
+        "securitySchemes": {
+            "api_key": {
+                "type": "apiKey",
+                "name": "api_key",
+                "in": "header"
+            },
+            "jwt_auth": {
+                "type": "oauth2",
+                "flows": {
+                    "implicit": {
+                        "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+                        "scopes": {
+                            "read:meteopark": "read your pets",
+                            "write:meteopark": "modify pets in your account"
+                        }
+                    }
                 }
             }
         }

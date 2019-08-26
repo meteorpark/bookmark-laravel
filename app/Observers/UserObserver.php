@@ -15,14 +15,6 @@ class UserObserver
      */
     public function created(User $user)
     {
-
-//        $table->bigIncrements('id');
-//        $table->unsignedInteger('user_id');
-//        $table->string('name')->comment('카테고리 명');
-//        $table->integer('rank')->default(1)->comment('카테고리 순서');
-//        $table->timestamps();
-
-
         BookmarkCategory::create([
             'user_id' => $user->id,
             'name' => 'default',
