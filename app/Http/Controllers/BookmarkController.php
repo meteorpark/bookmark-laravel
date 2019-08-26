@@ -9,9 +9,16 @@ use App\Models\Bookmark;
 use App\Services\BookmarkServiceInterface;
 
 
+/**
+ * Class BookmarkController
+ * @package App\Http\Controllers
+ */
 class BookmarkController extends Controller
 {
 
+    /**
+     * @var BookmarkServiceInterface
+     */
     public $bookmarkService;
 
     /**
@@ -25,8 +32,6 @@ class BookmarkController extends Controller
     }
 
 
-
-
     /**
      * @param storeBookmarkRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -34,11 +39,8 @@ class BookmarkController extends Controller
     public function store(storeBookmarkRequest $request)
     {
 
-        $bookmark = Bookmark::create([
-            'user_id' => $request->user_id,
-            'category_id' => $request->category_id,
-            'url' => $request->url,
-        ]);
+        $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
+        $bookmark = $this->bookmarkService->bookmark($data);
 
         ProcessBookmark::dispatch($bookmark);
 
