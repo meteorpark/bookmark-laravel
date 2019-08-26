@@ -16,14 +16,14 @@ class Bookmark extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'category_id' => $this->category_id,
+            'id' => (string)$this->id,
+            'user_id' => (string)$this->user_id,
+            'category_id' => (string)$this->category_id,
             'url' => $this->url,
-            'site_name' => $this->site_name,
-            'title' => $this->title,
+            'site_name' => (string)$this->site_name,
+            'title' => (string)$this->title,
             'image' => $this->image,
-            'description' => $this->description,
+            'description' => (string)$this->description,
             'created_at' => (string)$this->created_at,
         ];
     }
