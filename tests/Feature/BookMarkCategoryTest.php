@@ -24,14 +24,8 @@ class BookMarkCategoryTest extends TestCase
             'name' => $faker->name,
         ];
 
-        $headers = [];
-        $user = $user = User::find(11);
-
-        $token = auth()->guard('api')->login($user);
-        $headers['Authorization'] = 'Bearer ' . $token;
         // When
-        $response = $this->json('POST', '/api/v1/bookmarks/category', $request, $headers);
-
+        $response = $this->json('POST', '/api/v1/bookmarks/category', $request, $this->login());
 
         $response->assertStatus(200);
     }

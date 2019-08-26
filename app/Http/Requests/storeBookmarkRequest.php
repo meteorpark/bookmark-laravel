@@ -27,7 +27,6 @@ class storeBookmarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' =>  'required',
             'category_id' => 'required',
             'url' => 'required',
         ];

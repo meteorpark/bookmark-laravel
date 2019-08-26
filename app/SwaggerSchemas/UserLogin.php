@@ -11,10 +11,10 @@ class UserLogin
      * @OA\Property(enum={"kakao", "facebook", "google"})
      * @var string
      */
-    private $join_type;
+    public $join_type;
     /**
      * @OA\Property()
      * @var string
      */
-    private $sns_id;
+    public $sns_id;
 }

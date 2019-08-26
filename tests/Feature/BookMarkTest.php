@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Support\Str;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,13 +15,12 @@ class BookMarkTest extends TestCase
     public function can_bookmark_and_queue()
     {
         $request = [
-            'user_id' => 1,
             'category_id' => 1,
             'url' => 'https://www.youtube.com/watch?v=vJ4i8AJBBGM',
         ];
 
         // When
-        $response = $this->json('POST', '/api/v1/bookmark', $request);
+        $response = $this->json('POST', '/api/v1/bookmarks', $request, $this->login());
 
         // Then
         $response->assertStatus(200);

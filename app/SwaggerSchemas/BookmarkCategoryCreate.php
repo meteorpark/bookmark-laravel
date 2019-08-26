@@ -10,13 +10,13 @@ class BookmarkCategoryCreate
      * @OA\Property()
      * @var string
      */
-    private $token;
+    public $token;
 
     /**
      * @OA\Property()
      * @var string
      */
-    private $name;
+    public $name;
 
 
 }

@@ -30,13 +30,13 @@ Route::prefix('v1')->middleware(['api'])->group(function () {
     Route::post('/bookmarks/category', 'BookMarkCategoryController@store'); // 카테고리 추가
     Route::get('/bookmarks/category', 'BookMarkCategoryController@show'); // 카테고리 조회
 
-
+    Route::post('/bookmarks', 'BookmarkController@store'); // 공유하기
 
 
 
 });
 
 
-//Route::post('/bookmark', 'BookmarkController@store'); // 공유하기
+
 //Route::get('/bookmark', 'BookmarkController@index'); // 카테고리의 공유항목 가져오기
 

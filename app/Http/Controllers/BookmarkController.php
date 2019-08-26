@@ -33,6 +33,27 @@ class BookmarkController extends Controller
 
 
     /**
+     * @OA\Post(
+     *      path="/api/v1/bookmarks",
+     *      tags={"Bookmark"},
+     *      summary="북마크 생성",
+     *      description="북마크 생성",
+     *      operationId="store",
+     *      @OA\RequestBody(
+     *          description="",
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(ref="#/components/schemas/BookmarkCreate"))
+     *      ),
+     *      @OA\Response(response=200, description="successful operation"),
+     *      @OA\Response(response=400, description="bad request"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     *      @OA\Response(response=409, description="unknown user"),
+     * )
+     */
+
+    /**
      * @param storeBookmarkRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
