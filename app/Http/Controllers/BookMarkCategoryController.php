@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storeBookMarkCategoryRequest;
-use App\Models\BookmarkCategory;
-use App\Http\Resources\BookmarkCategoryCollection;
+use App\Http\Resources\BookmarkCategoryCollection as BookmarkCategoryCollectionAlias;
 use App\Repositories\BookmarkCategoryRepositoryInterface;
 
 /**
@@ -52,13 +51,13 @@ class BookMarkCategoryController extends Controller
 
     /**
      * @param storeBookMarkCategoryRequest $request
-     * @return BookmarkCategoryCollection
+     * @return BookmarkCategoryCollectionAlias
      */
     public function store(storeBookMarkCategoryRequest $request)
     {
         $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
         $categories = $this->bookmarkCategory->create($data);
-        return new BookmarkCategoryCollection($categories);
+        return new BookmarkCategoryCollectionAlias($categories);
     }
 
     /**
@@ -83,11 +82,21 @@ class BookMarkCategoryController extends Controller
      * )
      */
     /**
-     * @return BookmarkCategoryCollection
+     * @return BookmarkCategoryCollectionAlias
      */
     public function show()
     {
         $categories = $this->bookmarkCategory->all(auth()->user()->id);
-        return new BookmarkCategoryCollection($categories);
+        return $categories;
     }
+
+
+//    public function destroy(int $id)
+//    {
+//
+//    }
+//    public function update(updateBookMarkCategoryRequest $request)
+//    {
+//
+//    }
 }

@@ -16,7 +16,6 @@ class BookmarkCategory extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'user_id' => (string)$this->user_id,
             'name' => $this->name,
             'rank' => (string)$this->rank,
         ];

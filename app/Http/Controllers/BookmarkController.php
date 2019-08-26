@@ -6,16 +6,22 @@ use App\Http\Requests\storeBookmarkRequest;
 use App\Http\Resources\BookmarkCollection;
 use App\Jobs\ProcessBookmark;
 use App\Models\Bookmark;
+use App\Services\BookmarkServiceInterface;
 
 
 class BookmarkController extends Controller
 {
 
+    public $bookmarkService;
+
     /**
      * BookmarkController constructor.
+     * @param BookmarkServiceInterface $bookmarkService
      */
-    public function __construct()
+    public function __construct(BookmarkServiceInterface $bookmarkService)
     {
+        $this->middleware('auth:api', ['except' => ['']]);
+        $this->bookmarkService = $bookmarkService;
     }
 
 

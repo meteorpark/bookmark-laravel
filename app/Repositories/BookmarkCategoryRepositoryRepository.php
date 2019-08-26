@@ -36,7 +36,7 @@ class BookmarkCategoryRepositoryRepository implements BookmarkCategoryRepository
      */
     public function all(int $user_id)
     {
-        return BookmarkCategory::where('user_id', $user_id)->paginate();
+        return BookmarkCategory::where('user_id', $user_id)->get();
     }
 
     /**
@@ -65,6 +65,6 @@ class BookmarkCategoryRepositoryRepository implements BookmarkCategoryRepository
      */
     public function bookmarkCategoryIncrement(int $user_id): int
     {
-        return BookmarkCategory::find($user_id)->count() + 1;
+        return BookmarkCategory::where('user_id', $user_id)->count() + 1;
     }
 }

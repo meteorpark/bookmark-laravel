@@ -13,6 +13,7 @@
 */
 
 
+
 Route::get('unauthenticated', function () {
     return response()->json(['status' => 'unauthenticated', 'errors' => new stdClass()], 401);
 })->name('unauthenticated');

@@ -14,6 +14,10 @@ class BackendServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(
+            'App\Services\BookmarkServiceInterface',
+            'App\Services\BookmarkService'
+        );
 
         $this->app->bind(
             'App\Repositories\UserRepositoryInterface',
