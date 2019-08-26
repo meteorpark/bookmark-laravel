@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBookmarkCateoriesTable extends Migration
+class CreateBookmarkCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBookmarkCateoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('bookmark_cateories', function (Blueprint $table) {
+        Schema::create('bookmark_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id');
             $table->string('name')->comment('카테고리 명');
@@ -29,6 +29,6 @@ class CreateBookmarkCateoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookmark_cateories');
+        Schema::dropIfExists('bookmark_categories');
     }
 }

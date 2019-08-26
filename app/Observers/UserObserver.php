@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\BookmarkCategory;
+use App\Models\User;
+
+class UserObserver
+{
+    /**
+     * Handle the user "created" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function created(User $user)
+    {
+
+//        $table->bigIncrements('id');
+//        $table->unsignedInteger('user_id');
+//        $table->string('name')->comment('카테고리 명');
+//        $table->integer('rank')->default(1)->comment('카테고리 순서');
+//        $table->timestamps();
+
+
+        BookmarkCategory::create([
+            'user_id' => $user->id,
+            'name' => 'default',
+            'rank' => 1,
+        ]);
+    }
+
+    /**
+     * Handle the user "updated" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function updated(User $user)
+    {
+        //
+    }
+
+    /**
+     * Handle the user "deleted" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function deleted(User $user)
+    {
+        //
+    }
+
+    /**
+     * Handle the user "restored" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function restored(User $user)
+    {
+        //
+    }
+
+    /**
+     * Handle the user "force deleted" event.
+     *
+     * @param User $user
+     * @return void
+     */
+    public function forceDeleted(User $user)
+    {
+        //
+    }
+}

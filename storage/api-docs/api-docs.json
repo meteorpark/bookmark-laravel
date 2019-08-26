@@ -37,7 +37,7 @@
                     "201": {
                         "description": "successful operation"
                     },
-                    "401": {
+                    "400": {
                         "description": "input error"
                     }
                 }
