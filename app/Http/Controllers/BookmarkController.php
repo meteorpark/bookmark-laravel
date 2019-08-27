@@ -26,7 +26,7 @@ class BookmarkController extends Controller
      */
     public function __construct(BookmarkServiceInterface $bookmarkService)
     {
-        $this->middleware('auth:api', ['except' => ['']]);
+        $this->middleware('auth:api');
         $this->bookmarkService = $bookmarkService;
     }
 

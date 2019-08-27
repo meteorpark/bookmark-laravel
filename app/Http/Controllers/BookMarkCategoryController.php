@@ -23,7 +23,7 @@ class BookMarkCategoryController extends Controller
      */
     public function __construct(BookmarkCategoryRepositoryInterface $bookmarkCategory)
     {
-        $this->middleware('auth:api', ['except' => ['']]);
+        $this->middleware('auth:api');
         $this->bookmarkCategory = $bookmarkCategory;
     }
 
