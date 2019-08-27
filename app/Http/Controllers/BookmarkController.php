@@ -26,7 +26,7 @@ class BookmarkController extends Controller
      */
     public function __construct(BookmarkServiceInterface $bookmarkService)
     {
-        $this->middleware('auth:api', ['except' => ['index']]);
+        $this->middleware('auth:api', ['except' => ['']]);
         $this->bookmarkService = $bookmarkService;
     }
 
@@ -70,7 +70,7 @@ class BookmarkController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/v1/bookmarks/category/{category_id}",
+     *      path="/api/v1/bookmarks/{category_id}",
      *      tags={"Bookmark"},
      *      summary="북마크 리스트 가져오기",
      *      description="북마크 리스트 가져오기",

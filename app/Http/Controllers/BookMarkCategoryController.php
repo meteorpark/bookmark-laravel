@@ -30,7 +30,7 @@ class BookMarkCategoryController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/v1/bookmarks/category",
+     *      path="/api/v1/category",
      *      tags={"BookmarkCategory"},
      *      summary="카테고리 생성",
      *      description="카테고리 생성",
@@ -61,11 +61,11 @@ class BookMarkCategoryController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/api/v1/bookmarks/category",
+     *      path="/api/v1/category",
      *      tags={"BookmarkCategory"},
      *      summary="카테고리 조회",
      *      description="카테고리 조회",
-     *      operationId="store",
+     *      operationId="show",
      *      @OA\Parameter(
      *          name="token",
      *          in="query",
