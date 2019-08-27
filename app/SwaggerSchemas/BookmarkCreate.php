@@ -2,16 +2,10 @@
 
 
 /**
- * @OA\Schema(required={"category_id", "token", "url"}, @OA\Xml(name="BookmarkCreate"))
+ * @OA\Schema(required={"category_id", "url"}, @OA\Xml(name="BookmarkCreate"))
  */
 class BookmarkCreate
 {
-    /**
-     * @OA\Property()
-     * @var string
-     */
-    public $token;
-
     /**
      * @OA\Property()
      * @var string

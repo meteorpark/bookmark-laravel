@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\storeBookmarkRequest;
 use App\Http\Resources\BookmarkCollection;
 use App\Jobs\ProcessBookmark;
-use App\Models\Bookmark;
 use App\Services\BookmarkServiceInterface;
 
 
@@ -39,6 +38,7 @@ class BookmarkController extends Controller
      *      summary="북마크 생성",
      *      description="북마크 생성",
      *      operationId="store",
+     *      security={{"bearerAuth":{}}},
      *      @OA\RequestBody(
      *          description="",
      *          required=true,
@@ -77,6 +77,40 @@ class BookmarkController extends Controller
      *      summary="북마크 리스트 가져오기",
      *      description="북마크 리스트 가져오기",
      *      operationId="index",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="category_id",
+     *          in="path",
+     *          description="category_id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *          ),
+     *      ),
+     *      @OA\Response(response=200, description="successful operation"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     * )
+     */
+
+    /**
+     * @param string $category_id
+     * @return BookmarkCollection
+     */
+    public function index(string $category_id)
+    {
+        $bookmarks = $this->bookmarkService->all($category_id);
+        return new BookmarkCollection($bookmarks);
+    }
+
+
+    /**
+     * @OA\Delete(
+     *      path="/api/v1/bookmarks/{category_id}/{bookmark_id}",
+     *      tags={"Bookmark"},
+     *      summary="북마크 삭제하기",
+     *      description="북마크 삭제하기",
+     *      operationId="destroy",
+     *      security={{"bearerAuth":{}}},
      *      @OA\Parameter(
      *          name="category_id",
      *          in="path",
@@ -87,9 +121,9 @@ class BookmarkController extends Controller
      *          ),
      *      ),
      *      @OA\Parameter(
-     *          name="token",
-     *          in="query",
-     *          description="access token",
+     *          name="bookmark_id",
+     *          in="path",
+     *          description="bookmark_id",
      *          required=true,
      *          @OA\Schema(
      *              type="string",
@@ -97,21 +131,13 @@ class BookmarkController extends Controller
      *      ),
      *      @OA\Response(response=200, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
-     *      @OA\Response(response=409, description="unknown user"),
      * )
      */
-
     /**
-     * @param int $category_id
-     * @return BookmarkCollection
+     * @param string $category_id
+     * @param string $bookmark_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index(string $category_id)
-    {
-        $bookmarks = $this->bookmarkService->all($category_id);
-        return new BookmarkCollection($bookmarks);
-    }
-
-
     public function destroy(string $category_id, string $bookmark_id)
     {
         $this->bookmarkService->destroy($category_id, $bookmark_id);

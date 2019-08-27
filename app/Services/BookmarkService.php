@@ -64,6 +64,6 @@ class BookmarkService implements BookmarkServiceInterface
      */
     public function destroy(string $category_id, string $bookmark_id)
     {
-        Bookmark::where('category_id', $category_id)->where('bookmark_id', $bookmark_id)->where('user_id', auth()->user()->id)->delete();
+        Bookmark::where('category_id', $category_id)->where('id', $bookmark_id)->where('user_id', auth()->user()->id)->delete();
     }
 }

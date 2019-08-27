@@ -35,6 +35,7 @@ class BookMarkCategoryController extends Controller
      *      summary="카테고리 생성",
      *      description="카테고리 생성",
      *      operationId="store",
+     *      security={{"bearerAuth":{}}},
      *      @OA\RequestBody(
      *          description="",
      *          required=true,
@@ -66,21 +67,12 @@ class BookMarkCategoryController extends Controller
      *      summary="카테고리 조회",
      *      description="카테고리 조회",
      *      operationId="show",
-     *      @OA\Parameter(
-     *          name="token",
-     *          in="query",
-     *          description="access token",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="string",
-     *          ),
-     *      ),
+     *      security={{"bearerAuth":{}}},
      *      @OA\Response(response=201, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
      *      @OA\Response(response=409, description="unknown user"),
      * )
      */
-
     /**
      * @return mixed
      */
