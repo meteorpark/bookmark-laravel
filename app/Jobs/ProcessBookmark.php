@@ -37,7 +37,7 @@ class ProcessBookmark implements ShouldQueue
         $bookmark = $this->bookmark;
         $data = $crawlerService->crawler($bookmark->url);
 
-        if(!empty($data['site_name'])){
+        if ($data['is_meta_tag']) {
             $bookmark->site_name = $data['site_name'];
             $bookmark->title = $data['title'];
             $bookmark->image = $data['image'];
@@ -45,11 +45,26 @@ class ProcessBookmark implements ShouldQueue
             $bookmark->is_failed = 'N';
             $bookmark->save();
 
-        }else{
+        } else {
 
             $bookmark->is_failed = 'Y';
             $bookmark->save();
         }
+
+        /*
+            [program:laravel-worker]
+            command=php /var/www/html/bookmark-laravel/artisan queue:work
+            process_name=%(program_name)s_%(process_num)02d
+            numprocs=8
+            priority=999
+            autostart=true
+            autorestart=true
+            startsecs=1
+            startretries=3
+            user=apache
+            redirect_stderr=true
+            stdout_logfile=/var/log/worker.log
+         */
 
     }
 }

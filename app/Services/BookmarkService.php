@@ -38,21 +38,32 @@ class BookmarkService implements BookmarkServiceInterface
      */
     public function createBookmark(array $bookmark_data)
     {
-        $this->hasCategory($bookmark_data['category_id'], $bookmark_data['user_id']);
+        $user_id = auth()->user()->id;
+        $this->hasCategory($bookmark_data['category_id'], $user_id);
 
         return Bookmark::create([
-            'user_id' => $bookmark_data['user_id'],
+            'user_id' => $user_id,
             'category_id' => $bookmark_data['category_id'],
             'url' => $bookmark_data['url'],
         ]);
     }
 
     /**
-     * @param int $category_id
+     * @param string $category_id
      * @return mixed
      */
-    public function all(int $category_id)
+    public function all(string $category_id)
     {
         return BookmarkCategory::find($category_id)->bookmarks()->paginate();
+    }
+
+    /**
+     * @param string $category_id
+     * @param string $bookmark_id
+     * @return mixed
+     */
+    public function destroy(string $category_id, string $bookmark_id)
+    {
+        Bookmark::where('category_id', $category_id)->where('bookmark_id', $bookmark_id)->where('user_id', auth()->user()->id)->delete();
     }
 }

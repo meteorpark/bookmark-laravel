@@ -17,9 +17,16 @@ interface BookmarkServiceInterface
     public function createBookmark(array $bookmark_data);
 
     /**
-     * @param int $category_id
+     * @param string $category_id
      * @return mixed
      */
-    public function all(int $category_id);
+    public function all(string $category_id);
+
+    /**
+     * @param string $category_id
+     * @param string $bookmark_id
+     * @return mixed
+     */
+    public function destroy(string $category_id, string $bookmark_id);
 
 }

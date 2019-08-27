@@ -30,6 +30,7 @@ Route::prefix('v1')->middleware(['api'])->group(function () {
 
     Route::post('/bookmarks', 'BookmarkController@store'); // 공유하기
     Route::get('/bookmarks/{category_id}', 'BookmarkController@index'); // 카테고리의 공유항목 가져오기
+    Route::delete('/bookmarks/{category_id}/{bookmark_id}', 'BookmarkController@destroy'); // 공유항목 삭제하기
 });
 
 

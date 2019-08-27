@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\storeBookmarkRequest;
 use App\Http\Resources\BookmarkCollection;
 use App\Jobs\ProcessBookmark;
+use App\Models\Bookmark;
 use App\Services\BookmarkServiceInterface;
 
 
@@ -59,7 +60,8 @@ class BookmarkController extends Controller
     public function store(storeBookmarkRequest $request)
     {
 
-        $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
+        $data = $request->all();
+
         $bookmark = $this->bookmarkService->createBookmark($data);
 
         ProcessBookmark::dispatch($bookmark);
@@ -107,5 +109,13 @@ class BookmarkController extends Controller
     {
         $bookmarks = $this->bookmarkService->all($category_id);
         return new BookmarkCollection($bookmarks);
+    }
+
+
+    public function destroy(string $category_id, string $bookmark_id)
+    {
+        $this->bookmarkService->destroy($category_id, $bookmark_id);
+
+        return response()->json(null, 200);
     }
 }

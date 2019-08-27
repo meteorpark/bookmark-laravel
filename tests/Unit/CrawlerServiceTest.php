@@ -27,7 +27,7 @@ class CrawlerServiceTest extends TestCase
     {
 
         $crawler = new CrawlerService();
-        $url = "https://www.youtube.com/watch?v=m-H23F7IED8&feature=youtu.be";
+        $url = "https://www.daum.net";
         $data = $crawler->crawler($url);
         $this->assertIsArray($data);
     }

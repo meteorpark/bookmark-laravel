@@ -77,16 +77,21 @@ class CrawlerService
             'image' => '',
             'url' => '',
             'description' => '',
+            'is_meta_tag' => false,
         ];
 
         foreach (array_keys($tags) as $tag) {
 
             try {
                 $tags[$tag] = $data->filterXpath('//meta[@property="og:' . $tag . '"]')->attr('content');
+                $tags['is_meta_tag'] = true;
 
             } catch (Exception $e) {
 
-                $tags[$tag] = "";
+                if ($tag !== "is_meta_tag") {
+
+                    $tags[$tag] = "";
+                }
             }
         }
 
