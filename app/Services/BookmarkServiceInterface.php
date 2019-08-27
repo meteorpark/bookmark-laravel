@@ -27,6 +27,6 @@ interface BookmarkServiceInterface
      * @param string $bookmark_id
      * @return mixed
      */
-    public function destroy(string $category_id, string $bookmark_id);
+    public function delete(string $category_id, string $bookmark_id);
 
 }

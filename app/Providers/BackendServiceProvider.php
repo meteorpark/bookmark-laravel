@@ -25,8 +25,8 @@ class BackendServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            'App\Repositories\BookmarkCategoryRepositoryInterface',
-            'App\Repositories\BookmarkCategoryRepositoryRepository'
+            'App\Repositories\CategoryRepositoryInterface',
+            'App\Repositories\CategoryRepository'
         );
     }
 

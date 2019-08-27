@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\storeBookMarkCategoryRequest;
-use App\Repositories\BookmarkCategoryRepositoryInterface;
+use App\Repositories\CategoryRepositoryInterface;
 
 /**
  * Class BookMarkCategoryController
@@ -13,15 +13,15 @@ class BookMarkCategoryController extends Controller
 {
 
     /**
-     * @var BookmarkCategoryRepositoryInterface
+     * @var CategoryRepositoryInterface
      */
     private $bookmarkCategory;
 
     /**
      * BookMarkCategoryController constructor.
-     * @param BookmarkCategoryRepositoryInterface $bookmarkCategory
+     * @param CategoryRepositoryInterface $bookmarkCategory
      */
-    public function __construct(BookmarkCategoryRepositoryInterface $bookmarkCategory)
+    public function __construct(CategoryRepositoryInterface $bookmarkCategory)
     {
         $this->middleware('auth:api');
         $this->bookmarkCategory = $bookmarkCategory;
@@ -43,7 +43,7 @@ class BookMarkCategoryController extends Controller
      *              mediaType="multipart/form-data",
      *              @OA\Schema(ref="#/components/schemas/BookmarkCategoryCreate"))
      *      ),
-     *      @OA\Response(response=201, description="successful operation"),
+     *      @OA\Response(response=200, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
      *      @OA\Response(response=409, description="unknown user"),
      * )
@@ -57,7 +57,7 @@ class BookMarkCategoryController extends Controller
     {
         $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
         $categories = $this->bookmarkCategory->create($data);
-        return $categories;
+        return response()->json($categories, 201);
     }
 
     /**
@@ -68,9 +68,8 @@ class BookMarkCategoryController extends Controller
      *      description="카테고리 조회",
      *      operationId="show",
      *      security={{"bearerAuth":{}}},
-     *      @OA\Response(response=201, description="successful operation"),
+     *      @OA\Response(response=200, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
-     *      @OA\Response(response=409, description="unknown user"),
      * )
      */
     /**
@@ -83,10 +82,38 @@ class BookMarkCategoryController extends Controller
     }
 
 
-//    public function destroy(int $id)
-//    {
-//
-//    }
+    /**
+     * @OA\Delete(
+     *      path="/api/v1/category/{category_id}",
+     *      tags={"Category"},
+     *      summary="카테고리 삭제",
+     *      description="destroy 삭제",
+     *      operationId="destroy",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="category_id",
+     *          in="path",
+     *          description="category_id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *          ),
+     *      ),
+     *      @OA\Response(response=204, description="successful operation"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     * )
+     */
+    /**
+     * @param string $category_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(string $category_id)
+    {
+        $this->bookmarkCategory->delete($category_id);
+        return response()->json(null, 204);
+
+    }
+
 //    public function update(updateBookMarkCategoryRequest $request)
 //    {
 //

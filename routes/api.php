@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function () {
 
     Route::post('/category', 'BookMarkCategoryController@store'); // 카테고리 추가
     Route::get('/category', 'BookMarkCategoryController@show'); // 카테고리 조회
+    Route::delete('/category/{category_id}', 'BookMarkCategoryController@destroy'); // 카테고리 삭제
 
     Route::post('/bookmarks', 'BookmarkController@store'); // 공유하기
     Route::get('/bookmarks/{category_id}', 'BookmarkController@index'); // 카테고리의 공유항목 가져오기

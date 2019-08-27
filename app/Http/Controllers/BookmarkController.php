@@ -66,7 +66,7 @@ class BookmarkController extends Controller
 
         ProcessBookmark::dispatch($bookmark);
 
-        return response()->json(null, 200);
+        return response()->json(null, 201);
     }
 
 
@@ -129,7 +129,7 @@ class BookmarkController extends Controller
      *              type="string",
      *          ),
      *      ),
-     *      @OA\Response(response=200, description="successful operation"),
+     *      @OA\Response(response=204, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
      * )
      */
@@ -140,8 +140,8 @@ class BookmarkController extends Controller
      */
     public function destroy(string $category_id, string $bookmark_id)
     {
-        $this->bookmarkService->destroy($category_id, $bookmark_id);
+        $this->bookmarkService->delete($category_id, $bookmark_id);
 
-        return response()->json(null, 200);
+        return response()->json(null, 204);
     }
 }

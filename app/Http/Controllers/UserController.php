@@ -82,7 +82,7 @@ class UserController extends Controller
      *              mediaType="multipart/form-data",
      *              @OA\Schema(ref="#/components/schemas/UserLogin"))
      *      ),
-     *      @OA\Response(response=201, description="successful operation"),
+     *      @OA\Response(response=200, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
      *      @OA\Response(response=409, description="unknown user"),
      * )
@@ -108,7 +108,7 @@ class UserController extends Controller
 
         $user->setAttribute('token', $this->generateToken($user));
 
-        return response()->json(new UserResource($user), 200);
+        return response()->json(new UserResource($user));
     }
 
 
@@ -128,14 +128,8 @@ class UserController extends Controller
      *      summary="토큰 재발행",
      *      description="토큰 재발행",
      *      operationId="refreshToken",
-     *      @OA\RequestBody(
-     *          description="",
-     *          required=true,
-     *          @OA\MediaType(
-     *              mediaType="multipart/form-data",
-     *              @OA\Schema(ref="#/components/schemas/RefreshToken"))
-     *      ),
-     *      @OA\Response(response=201, description="successful operation"),
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
      *      @OA\Response(response=409, description="unknown user"),
      * )
@@ -151,8 +145,13 @@ class UserController extends Controller
             'token' => $newToken,
             'token_type' => 'bearer',
             'expires_in' => (string)auth()->factory()->getTTL() * 60
-        ], 201);
+        ]);
     }
+
+
+
+
+
 
 
     /**

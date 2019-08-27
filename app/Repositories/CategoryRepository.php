@@ -10,7 +10,7 @@ use App\Models\BookmarkCategory;
  * Class BookmarkCategoryRepository
  * @package App\Repositories
  */
-class BookmarkCategoryRepositoryRepository implements BookmarkCategoryRepositoryInterface
+class CategoryRepository implements CategoryRepositoryInterface
 {
     /**
      * @param array $bookCategory_data
@@ -31,39 +31,39 @@ class BookmarkCategoryRepositoryRepository implements BookmarkCategoryRepository
 
 
     /**
-     * @param int $user_id
+     * @param string $user_id
      * @return mixed
      */
-    public function all(int $user_id)
+    public function all(string $user_id)
     {
         return BookmarkCategory::where('user_id', $user_id)->get();
     }
 
     /**
-     * @param int $bookCategory_id
+     * @param string $category_id
      * @return mixed|void
      */
-    public function delete(int $bookCategory_id)
+    public function delete(string $category_id)
     {
-        // TODO: Implement delete() method.
+        return BookmarkCategory::where('id', $category_id)->where('user_id', auth()->user()->id)->delete();
     }
 
     /**
-     * @param int $bookCategory_id
-     * @param array $bookCategory_data
+     * @param string $category_id
+     * @param array $category_data
      * @return mixed|void
      */
-    public function update(int $bookCategory_id, array $bookCategory_data)
+    public function update(string $category_id, array $category_data)
     {
         // TODO: Implement update() method.
     }
 
 
     /**
-     * @param int $user_id
+     * @param string $user_id
      * @return int
      */
-    public function bookmarkCategoryIncrement(int $user_id): int
+    public function bookmarkCategoryIncrement(string $user_id): int
     {
         return BookmarkCategory::where('user_id', $user_id)->count() + 1;
     }
