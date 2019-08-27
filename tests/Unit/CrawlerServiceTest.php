@@ -27,8 +27,9 @@ class CrawlerServiceTest extends TestCase
     {
 
         $crawler = new CrawlerService();
-        $url = "https://www.daum.net";
+        $url = "http://www.zdnet.co.kr/view/?no=20190822082224";
         $data = $crawler->crawler($url);
+        dd($data);
         $this->assertIsArray($data);
     }
 }

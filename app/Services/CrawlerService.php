@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Exception;
@@ -37,6 +36,7 @@ class CrawlerService
             'timeout' => 3,
         ]);
         $this->client->setClient($guzzleClient);
+        $this->client->setHeader('User-Agent', "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6");
 
         $this->tags = [
             'site_name' => '',
