@@ -17,7 +17,7 @@
         "/api/v1/category": {
             "get": {
                 "tags": [
-                    "BookmarkCategory"
+                    "Category"
                 ],
                 "summary": "카테고리 조회",
                 "description": "카테고리 조회",
@@ -47,7 +47,7 @@
             },
             "post": {
                 "tags": [
-                    "BookmarkCategory"
+                    "Category"
                 ],
                 "summary": "카테고리 생성",
                 "description": "카테고리 생성",
