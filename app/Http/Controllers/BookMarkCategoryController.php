@@ -87,7 +87,7 @@ class BookMarkCategoryController extends Controller
      *      path="/api/v1/category/{category_id}",
      *      tags={"Category"},
      *      summary="카테고리 삭제",
-     *      description="destroy 삭제",
+     *      description="카테고리 삭제",
      *      operationId="destroy",
      *      security={{"bearerAuth":{}}},
      *      @OA\Parameter(
