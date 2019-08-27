@@ -25,6 +25,8 @@ class CrawlerService
      */
     private $url;
 
+    private $tags = [];
+
     /**
      * CrawlerService constructor.
      */
@@ -35,6 +37,15 @@ class CrawlerService
             'timeout' => 3,
         ]);
         $this->client->setClient($guzzleClient);
+
+        $this->tags = [
+            'site_name' => '',
+            'title' => '',
+            'image' => '',
+            'url' => '',
+            'description' => '',
+            'is_meta_tag' => false,
+        ];
     }
 
 
@@ -53,7 +64,7 @@ class CrawlerService
 
         } catch (Exception $e) {
 
-            return [];
+            return $this->tags;
         }
     }
 
@@ -71,30 +82,22 @@ class CrawlerService
      */
     private function parser(Crawler $data): array
     {
-        $tags = [
-            'site_name' => '',
-            'title' => '',
-            'image' => '',
-            'url' => '',
-            'description' => '',
-            'is_meta_tag' => false,
-        ];
 
-        foreach (array_keys($tags) as $tag) {
+        foreach (array_keys($this->tags) as $tag) {
 
             try {
-                $tags[$tag] = $data->filterXpath('//meta[@property="og:' . $tag . '"]')->attr('content');
-                $tags['is_meta_tag'] = true;
+                $this->tags[$tag] = $data->filterXpath('//meta[@property="og:' . $tag . '"]')->attr('content');
+                $this->tags['is_meta_tag'] = true;
 
             } catch (Exception $e) {
 
                 if ($tag !== "is_meta_tag") {
 
-                    $tags[$tag] = "";
+                    $this->tags[$tag] = "";
                 }
             }
         }
 
-        return $tags;
+        return $this->tags;
     }
 }
