@@ -17,22 +17,6 @@ class BookmarkService implements BookmarkServiceInterface
 
 
     /**
-     * @param array $bookmark_data
-     * @return mixed
-     * @throws MeteoException
-     */
-    public function bookmark(array $bookmark_data)
-    {
-        $this->hasCategory($bookmark_data['category_id'], $bookmark_data['user_id']);
-
-        return Bookmark::create([
-            'user_id' => $bookmark_data['user_id'],
-            'category_id' => $bookmark_data['category_id'],
-            'url' => $bookmark_data['url'],
-        ]);
-    }
-
-    /**
      * @param int $category_id
      * @param int $user_id
      * @throws MeteoException
@@ -45,5 +29,30 @@ class BookmarkService implements BookmarkServiceInterface
 
             throw new MeteoException("존재하지 않는 카테고리 입니다.");
         }
+    }
+
+    /**
+     * @param array $bookmark_data
+     * @return mixed
+     * @throws MeteoException
+     */
+    public function createBookmark(array $bookmark_data)
+    {
+        $this->hasCategory($bookmark_data['category_id'], $bookmark_data['user_id']);
+
+        return Bookmark::create([
+            'user_id' => $bookmark_data['user_id'],
+            'category_id' => $bookmark_data['category_id'],
+            'url' => $bookmark_data['url'],
+        ]);
+    }
+
+    /**
+     * @param int $category_id
+     * @return mixed
+     */
+    public function all(int $category_id)
+    {
+        return BookmarkCategory::find($category_id)->bookmarks()->paginate();
     }
 }

@@ -111,6 +111,7 @@ class UserController extends Controller
         return response()->json(new UserResource($user), 200);
     }
 
+
     /**
      * @param $user
      * @return mixed
@@ -120,12 +121,38 @@ class UserController extends Controller
         return JWTAuth::fromUser($user);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/v1/token",
+     *      tags={"Token"},
+     *      summary="토큰 재발행",
+     *      description="토큰 재발행",
+     *      operationId="refreshToken",
+     *      @OA\RequestBody(
+     *          description="",
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(ref="#/components/schemas/RefreshToken"))
+     *      ),
+     *      @OA\Response(response=201, description="successful operation"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     *      @OA\Response(response=409, description="unknown user"),
+     * )
+     */
+    /**
+     * @return JsonResponse
+     */
+    public function refreshToken()
+    {
+        $newToken = auth()->refresh();
 
-
-
-
-
-
+        return response()->json([
+            'token' => $newToken,
+            'token_type' => 'bearer',
+            'expires_in' => (string)auth()->factory()->getTTL() * 60
+        ], 201);
+    }
 
 
     /**

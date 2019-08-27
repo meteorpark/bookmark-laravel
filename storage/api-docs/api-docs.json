@@ -111,6 +111,47 @@
                 }
             }
         },
+        "/api/v1/bookmarks/category/{category_id}": {
+            "get": {
+                "tags": [
+                    "Bookmark"
+                ],
+                "summary": "북마크 리스트 가져오기",
+                "description": "북마크 리스트 가져오기",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "category_id",
+                        "in": "path",
+                        "description": "category_id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "access token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    },
+                    "409": {
+                        "description": "unknown user"
+                    }
+                }
+            }
+        },
         "/api/v1/users": {
             "post": {
                 "tags": [
@@ -171,6 +212,38 @@
                     }
                 }
             }
+        },
+        "/api/v1/token": {
+            "post": {
+                "tags": [
+                    "Token"
+                ],
+                "summary": "토큰 재발행",
+                "description": "토큰 재발행",
+                "operationId": "refreshToken",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshToken"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    },
+                    "409": {
+                        "description": "unknown user"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -213,6 +286,21 @@
                 "type": "object",
                 "xml": {
                     "name": "BookmarkCreate"
+                }
+            },
+            "RefreshToken": {
+                "required": [
+                    "name",
+                    "token"
+                ],
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "RefreshToken"
                 }
             },
             "UserCreate": {

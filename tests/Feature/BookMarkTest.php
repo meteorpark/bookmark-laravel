@@ -25,15 +25,17 @@ class BookMarkTest extends TestCase
         // Then
         $response->assertStatus(200);
     }
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
 
+    /**
+     * @test
+     */
+    public function select_category_in_bookmarks()
+    {
+        $path_category_id = 1;
+
+        $response = $this->json('GET', '/api/v1/bookmarks/category/'.$path_category_id, [], $this->login());
+
+        // Then
         $response->assertStatus(200);
     }
 }

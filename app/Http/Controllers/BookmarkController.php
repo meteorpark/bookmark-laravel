@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\storeBookmarkRequest;
 use App\Http\Resources\BookmarkCollection;
 use App\Jobs\ProcessBookmark;
-use App\Models\Bookmark;
 use App\Services\BookmarkServiceInterface;
 
 
@@ -27,7 +26,7 @@ class BookmarkController extends Controller
      */
     public function __construct(BookmarkServiceInterface $bookmarkService)
     {
-        $this->middleware('auth:api', ['except' => ['']]);
+        $this->middleware('auth:api', ['except' => ['index']]);
         $this->bookmarkService = $bookmarkService;
     }
 
@@ -61,7 +60,7 @@ class BookmarkController extends Controller
     {
 
         $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
-        $bookmark = $this->bookmarkService->bookmark($data);
+        $bookmark = $this->bookmarkService->createBookmark($data);
 
         ProcessBookmark::dispatch($bookmark);
 
@@ -70,10 +69,43 @@ class BookmarkController extends Controller
 
 
     /**
+     * @OA\Get(
+     *      path="/api/v1/bookmarks/category/{category_id}",
+     *      tags={"Bookmark"},
+     *      summary="북마크 리스트 가져오기",
+     *      description="북마크 리스트 가져오기",
+     *      operationId="index",
+     *      @OA\Parameter(
+     *          name="category_id",
+     *          in="path",
+     *          description="category_id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *          ),
+     *      ),
+     *      @OA\Parameter(
+     *          name="token",
+     *          in="query",
+     *          description="access token",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *          ),
+     *      ),
+     *      @OA\Response(response=200, description="successful operation"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     *      @OA\Response(response=409, description="unknown user"),
+     * )
+     */
+
+    /**
+     * @param int $category_id
      * @return BookmarkCollection
      */
-    public function index()
+    public function index(string $category_id)
     {
-        return new BookmarkCollection(Bookmark::paginate());
+        $bookmarks = $this->bookmarkService->all($category_id);
+        return new BookmarkCollection($bookmarks);
     }
 }
