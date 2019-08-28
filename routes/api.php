@@ -18,6 +18,7 @@ Route::get('unauthenticated', function () {
 
 Route::group([
     'prefix' => 'v1',
+    'middleware' => 'api',
 ], function () {
 
     Route::post('/token', 'UserController@refreshToken'); // refresh token
@@ -28,9 +29,8 @@ Route::group([
 
     Route::post('/category', 'BookMarkCategoryController@store'); // 카테고리 추가
     Route::get('/category', 'BookMarkCategoryController@show'); // 카테고리 조회
-    Route::delete('/category/{category_id}', 'BookMarkCategoryController@destroy'); // 카테고리 삭제
     Route::put('/category/{category_id}', 'BookMarkCategoryController@update'); // 카테고리 명 변경
-
+    Route::delete('/category/{category_id}', 'BookMarkCategoryController@destroy'); // 카테고리 삭제
     Route::post('/bookmarks', 'BookmarkController@store'); // 공유하기
     Route::post('/bookmarks/move', 'BookmarkController@move'); // 북마크 이동
     Route::get('/bookmarks/{category_id}', 'BookmarkController@index'); // 카테고리의 북마크들 가져오기

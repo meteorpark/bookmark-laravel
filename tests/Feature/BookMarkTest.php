@@ -33,8 +33,20 @@ class BookMarkTest extends TestCase
     {
         $path_category_id = 1;
 
-        $response = $this->json('GET', '/api/v1/bookmarks/category/'.$path_category_id, [], $this->login());
+        $response = $this->json('GET', '/api/v1/bookmarks/category/' . $path_category_id, [], $this->login());
 
+        // Then
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function can_bookmark_name_update()
+    {
+        $path_category_id = 1;
+
+        $response = $this->json('POST', '/api/v1/bookmarks/category/' . $path_category_id, [], $this->login());
         // Then
         $response->assertStatus(200);
     }

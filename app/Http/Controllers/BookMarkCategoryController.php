@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\storeBookMarkCategoryRequest;
-use App\Http\Requests\updateBookMarkCategoryRequest;
+use App\Http\Requests\{storeBookMarkCategoryRequest, updateBookMarkCategoryRequest};
 use App\Repositories\CategoryRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 
 /**
  * Class BookMarkCategoryController
@@ -52,9 +52,9 @@ class BookMarkCategoryController extends Controller
 
     /**
      * @param storeBookMarkCategoryRequest $request
-     * @return mixed
+     * @return JsonResponse
      */
-    public function store(storeBookMarkCategoryRequest $request)
+    public function store(storeBookMarkCategoryRequest $request): JsonResponse
     {
         $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
         $categories = $this->bookmarkCategory->create($data);
@@ -106,9 +106,9 @@ class BookMarkCategoryController extends Controller
      */
     /**
      * @param string $category_id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy(string $category_id)
+    public function destroy(string $category_id): JsonResponse
     {
         $this->bookmarkCategory->delete($category_id);
         return response()->json(null, 204);
@@ -116,33 +116,42 @@ class BookMarkCategoryController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *      path="/api/v1/users/login",
-     *      tags={"User"},
-     *      summary="카테고리명 수정",
+     * @OA\Post(
+     *      path="/api/v1/category/{category_id}",
+     *      tags={"Category"},
+     *      summary="카테고리명 수정 ------- 이거는 하지 마세요!!!!!! 작업 중",
      *      description="카테고리명 수정",
      *      operationId="update",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Parameter(
+     *          name="category_id",
+     *          in="path",
+     *          description="category_id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string",
+     *          ),
+     *      ),
      *      @OA\RequestBody(
      *          description="",
      *          required=true,
      *          @OA\MediaType(
      *              mediaType="multipart/form-data",
-     *              @OA\Schema(ref="#/components/schemas/UserLogin"))
+     *              @OA\Schema(ref="#/components/schemas/BookmarkCategoryUpdate"))
      *      ),
      *      @OA\Response(response=200, description="successful operation"),
      *      @OA\Response(response=401, description="unauthorized token"),
-     *      @OA\Response(response=409, description="unknown user"),
      * )
      */
     /**
      * @param updateBookMarkCategoryRequest $request
      * @param string $category_id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(updateBookMarkCategoryRequest $request, string $category_id)
+    public function update(updateBookMarkCategoryRequest $request, string $category_id): JsonResponse
     {
         $data = array_merge($request->all(), ['user_id' => auth()->user()->id]);
         $categories = $this->bookmarkCategory->update($category_id, $data);
-        return response()->json($categories, 201);
+        return response()->json($categories, 200);
     }
 }

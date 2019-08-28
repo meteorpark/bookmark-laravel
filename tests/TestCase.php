@@ -20,7 +20,7 @@ abstract class TestCase extends BaseTestCase
     }
 
 
-    public function login(int $user_id = 11)
+    public function login(int $user_id = 1)
     {
         $headers = [];
         $user = $user = User::find($user_id);

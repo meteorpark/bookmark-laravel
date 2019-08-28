@@ -40,7 +40,7 @@ class storeBookmarkRequest extends FormRequest
             'status' => 'input_error',
             'errors' => $validator->errors()
         ];
-        $response = new JsonResponse( $json, 400 );
+        $response = new JsonResponse($json, 400);
         throw (new ValidationException($validator, $response))->status(400);
     }
 }
