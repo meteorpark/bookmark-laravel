@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\moveBookmarkRequest;
 use App\Http\Requests\storeBookmarkRequest;
 use App\Http\Resources\BookmarkCollection;
 use App\Jobs\ProcessBookmark;
@@ -143,5 +144,37 @@ class BookmarkController extends Controller
         $this->bookmarkService->delete($category_id, $bookmark_id);
 
         return response()->json(null, 204);
+    }
+
+
+    /**
+     * @OA\Post(
+     *      path="/api/v1/bookmarks/move",
+     *      tags={"Bookmark"},
+     *      summary="북마크 이동",
+     *      description="북마크 이동",
+     *      operationId="move",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\RequestBody(
+     *          description="",
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(ref="#/components/schemas/BookmarkMove"))
+     *      ),
+     *      @OA\Response(response=200, description="successful operation"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     * )
+     */
+    /**
+     * @param moveBookmarkRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function move(moveBookmarkRequest $request)
+    {
+
+        $this->bookmarkService->move($request->category_id, $request->bookmark_id);
+
+        return response()->json(null, 200);
     }
 }

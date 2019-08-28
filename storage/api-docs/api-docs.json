@@ -223,6 +223,40 @@
                 ]
             }
         },
+        "/api/v1/bookmarks/move": {
+            "post": {
+                "tags": [
+                    "Bookmark"
+                ],
+                "summary": "북마크 이동",
+                "description": "북마크 이동",
+                "operationId": "move",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookmarkMove"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/users": {
             "post": {
                 "tags": [
@@ -343,6 +377,24 @@
                 "type": "object",
                 "xml": {
                     "name": "BookmarkCreate"
+                }
+            },
+            "BookmarkMove": {
+                "required": [
+                    "category_id",
+                    "bookmark_id"
+                ],
+                "properties": {
+                    "category_id": {
+                        "type": "string"
+                    },
+                    "bookmark_id": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BookmarkMove"
                 }
             },
             "UserCreate": {

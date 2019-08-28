@@ -75,4 +75,20 @@ class BookmarkService implements BookmarkServiceInterface
     {
         return Bookmark::find($bookmark_id);
     }
+
+    /**
+     * @param string $category_id
+     * @param string $bookmark_id
+     * @return mixed
+     */
+    public function move(string $category_id, string $bookmark_id)
+    {
+        $bookmark = Bookmark::where('id', $bookmark_id)->where('user_id', auth()->user()->id)->first();
+        $category = BookmarkCategory::where('id', $category_id)->where('user_id', auth()->user()->id)->first();
+
+        if ($bookmark && $category) {
+            $bookmark->category_id = $category_id;
+            $bookmark->save();
+        }
+    }
 }

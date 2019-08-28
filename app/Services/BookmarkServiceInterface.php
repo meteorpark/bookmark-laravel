@@ -34,4 +34,11 @@ interface BookmarkServiceInterface
      * @return mixed
      */
     public function getBookmark(string $bookmark_id);
+
+    /**
+     * @param string $category_id
+     * @param string $bookmark_id
+     * @return mixed
+     */
+    public function move(string $category_id, string $bookmark_id);
 }
