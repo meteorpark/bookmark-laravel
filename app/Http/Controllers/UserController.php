@@ -59,8 +59,14 @@ class UserController extends Controller
         $data = $request->all();
 
         $user = $this->user->getSnsId($data['sns_id']);
+
         if (!$user) {
+
+            $data['timezone'] = timezone();
             $user = $this->user->create($data);
+        } else {
+            $user->timezone = timezone();
+            $user->save();
         }
 
         $user->setAttribute('token', $this->generateToken($user));
@@ -147,11 +153,6 @@ class UserController extends Controller
             'expires_in' => (string)auth()->factory()->getTTL() * 60
         ]);
     }
-
-
-
-
-
 
 
     /**

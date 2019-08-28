@@ -54,7 +54,7 @@ class BookmarkService implements BookmarkServiceInterface
      */
     public function all(string $category_id)
     {
-        return BookmarkCategory::find($category_id)->bookmarks()->paginate();
+        return BookmarkCategory::find($category_id)->bookmarks()->orderBy('id', 'DESC')->paginate();
     }
 
     /**

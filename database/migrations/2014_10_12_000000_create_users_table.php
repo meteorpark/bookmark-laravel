@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('sns_id');
             $table->string('name');
             $table->string('profile_image')->nullable();
+            $table->string('timezone');
             $table->timestamps();
         });
 

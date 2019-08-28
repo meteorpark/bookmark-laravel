@@ -12,12 +12,14 @@
 |
 */
 
-
 Route::get('unauthenticated', function () {
     return response()->json(['status' => 'unauthenticated', 'errors' => new stdClass()], 401);
 })->name('unauthenticated');
 
-Route::prefix('v1')->group(function () {
+Route::group([
+    'prefix' => 'v1',
+//    'middleware' => 'timezone',
+], function () {
 
     Route::post('/token', 'UserController@refreshToken'); // refresh token
     Route::prefix('users')->group(function () {
