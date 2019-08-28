@@ -92,8 +92,11 @@ class CrawlerService
             } catch (Exception $e) {
 
                 if ($tag !== "is_meta_tag") {
-
                     $this->tags[$tag] = "";
+                }
+
+                if ($tag === "site_name") {
+                    $this->tags[$tag] = parse_url($this->url)['host'];
                 }
             }
         }

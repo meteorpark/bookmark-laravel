@@ -15,8 +15,8 @@ class CreateBookmarksTable extends Migration
     {
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('category_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('url');
             $table->string('site_name')->nullable();
             $table->string('title')->nullable();
@@ -26,6 +26,7 @@ class CreateBookmarksTable extends Migration
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

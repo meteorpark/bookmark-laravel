@@ -66,4 +66,13 @@ class BookmarkService implements BookmarkServiceInterface
     {
         Bookmark::where('category_id', $category_id)->where('id', $bookmark_id)->where('user_id', auth()->user()->id)->delete();
     }
+
+    /**
+     * @param string $bookmark_id
+     * @return mixed
+     */
+    public function getBookmark(string $bookmark_id)
+    {
+        return Bookmark::find($bookmark_id);
+    }
 }

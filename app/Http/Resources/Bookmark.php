@@ -17,12 +17,12 @@ class Bookmark extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'user_id' => (string)$this->user_id,
             'url' => $this->url,
             'site_name' => (string)$this->site_name,
             'title' => (string)$this->title,
             'image' => $this->image,
             'description' => (string)$this->description,
+            'is_failed' => $this->is_failed,
             'created_at' => (string)$this->created_at,
         ];
     }

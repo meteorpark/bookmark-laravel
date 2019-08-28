@@ -6,7 +6,7 @@ use App\Http\Requests\storeBookmarkRequest;
 use App\Http\Resources\BookmarkCollection;
 use App\Jobs\ProcessBookmark;
 use App\Services\BookmarkServiceInterface;
-
+use App\Http\Resources\Bookmark as BookmarkResource;
 
 /**
  * Class BookmarkController
@@ -66,7 +66,7 @@ class BookmarkController extends Controller
 
         ProcessBookmark::dispatch($bookmark);
 
-        return response()->json(null, 201);
+        return response()->json(new BookmarkResource($this->bookmarkService->getBookmark($bookmark->id)), 201);
     }
 
 

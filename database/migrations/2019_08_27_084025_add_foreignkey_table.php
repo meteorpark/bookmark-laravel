@@ -31,6 +31,16 @@ class AddForeignkeyTable extends Migration
      */
     public function down()
     {
-        //
+
+        Schema::table('bookmark_categories', function (Blueprint $table) {
+            $table->dropForeign('bookmark_categories_user_id_foreign');
+        });
+
+        Schema::table('bookmarks', function (Blueprint $table) {
+
+            $table->dropForeign('bookmarks_user_id_foreign');
+            $table->dropForeign('bookmarks_category_id_foreign');
+
+        });
     }
 }

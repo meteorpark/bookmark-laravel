@@ -37,10 +37,10 @@ class ProcessBookmark implements ShouldQueue
         $bookmark = $this->bookmark;
         $data = $crawlerService->crawler($bookmark->url);
         if ($data['is_meta_tag']) {
-            $bookmark->site_name = $data['site_name'];
+            $bookmark->site_name = trim($data['site_name']);
             $bookmark->title = $data['title'];
             $bookmark->image = $data['image'];
-            $bookmark->description = $data['description'];
+            $bookmark->description = mb_substr(trim($data['description']), 0, 250);
             $bookmark->is_failed = 'N';
             $bookmark->save();
 
