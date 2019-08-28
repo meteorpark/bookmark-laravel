@@ -13,20 +13,20 @@ use App\Models\BookmarkCategory;
 class CategoryRepository implements CategoryRepositoryInterface
 {
     /**
-     * @param array $bookCategory_data
+     * @param array $category_data
      * @return mixed
      */
-    public function create(array $bookCategory_data)
+    public function create(array $category_data)
     {
-        $rank = $this->bookmarkCategoryIncrement($bookCategory_data['user_id']);
+        $rank = $this->bookmarkCategoryIncrement($category_data['user_id']);
 
         BookmarkCategory::create([
-            'user_id' => $bookCategory_data['user_id'],
-            'name' => $bookCategory_data['name'],
+            'user_id' => $category_data['user_id'],
+            'name' => $category_data['name'],
             'rank' => $rank,
         ]);
 
-        return $this->all($bookCategory_data['user_id']);
+        return $this->all($category_data['user_id']);
     }
 
 
@@ -55,9 +55,12 @@ class CategoryRepository implements CategoryRepositoryInterface
      */
     public function update(string $category_id, array $category_data)
     {
-        // TODO: Implement update() method.
+        $bookmarkCategory = BookmarkCategory::where('id', $category_id)->where('user_id', $category_data['user_id'])->first();
+        if ($bookmarkCategory) {
+            $bookmarkCategory->name = $category_data['name'];
+            $bookmarkCategory->save();
+        }
     }
-
 
     /**
      * @param string $user_id

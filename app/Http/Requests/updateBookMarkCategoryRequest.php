@@ -27,7 +27,6 @@ class updateBookMarkCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required',
             'name' => 'required',
         ];
     }

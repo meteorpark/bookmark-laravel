@@ -58,7 +58,7 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        $user = $this->user->getSnsId($data['sns_id']);
+        $user = $this->user->getSnsId($data['join_type'], $data['sns_id']);
 
         if (!$user) {
 
@@ -92,7 +92,6 @@ class UserController extends Controller
      *      @OA\Response(response=401, description="unauthorized token"),
      *      @OA\Response(response=409, description="unknown user"),
      * )
-     *
      */
     /**
      * @param loginRequest $request

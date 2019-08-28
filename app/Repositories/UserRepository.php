@@ -14,12 +14,13 @@ class UserRepository implements UserRepositoryInterface
 {
 
     /**
+     * @param string $join_type
      * @param string $sns_id
      * @return mixed
      */
-    public function getSnsId(string $sns_id)
+    public function getSnsId(string $join_type, string $sns_id)
     {
-        return User::where('sns_id', $sns_id)->first();
+        return User::where('sns_id', $sns_id)->where('join_type', $join_type)->first();
     }
 
     /**
