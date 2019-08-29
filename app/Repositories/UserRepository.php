@@ -41,24 +41,12 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param string $user_id
      * @return mixed
      */
-    public function delete(string $user_id)
+    public function delete()
     {
-        // TODO: Implement delete() method.
+        User::find(auth()->user()->id)->delete();
     }
-
-    /**
-     * @param string $user_id
-     * @param array $user_data
-     * @return mixed
-     */
-    public function update(string $user_id, array $user_data)
-    {
-        // TODO: Implement update() method.
-    }
-
 
     /**
      * @param array $user_data

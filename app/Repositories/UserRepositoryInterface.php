@@ -37,15 +37,8 @@ interface UserRepositoryInterface
     public function all();
 
     /**
-     * @param string $user_id
      * @return mixed
      */
-    public function delete(string $user_id);
+    public function delete();
 
-    /**
-     * @param string $user_id
-     * @param array $user_data
-     * @return mixed
-     */
-    public function update(string $user_id, array $user_data);
 }

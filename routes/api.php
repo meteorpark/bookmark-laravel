@@ -26,8 +26,8 @@ Route::group([
     Route::prefix('users')->group(function () {
         Route::post('/', 'UserController@store'); // 회원가입
         Route::post('/login', 'UserController@login')->name('login'); // 로그인
+        Route::delete('/', 'UserController@destroy'); // 탈퇴
     });
-
     Route::post('/category', 'BookMarkCategoryController@store'); // 카테고리 추가
     Route::get('/category', 'BookMarkCategoryController@show'); // 카테고리 조회
     Route::put('/category/{category_id}', 'BookMarkCategoryController@update'); // 카테고리 명 변경
@@ -37,7 +37,6 @@ Route::group([
     Route::get('/bookmarks/{category_id}', 'BookmarkController@index'); // 카테고리의 북마크들 가져오기
     Route::delete('/bookmarks/{category_id}/{bookmark_id}', 'BookmarkController@destroy'); // 북마크 삭제하기
     Route::get('/search', 'SearchController@index'); // 검색
-
 });
 
 

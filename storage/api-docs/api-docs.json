@@ -364,6 +364,27 @@
                         "description": "input error"
                     }
                 }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "유저 삭제",
+                "description": "유저 삭제",
+                "operationId": "destroy",
+                "responses": {
+                    "204": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/users/login": {

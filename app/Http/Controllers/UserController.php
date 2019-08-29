@@ -155,23 +155,25 @@ class UserController extends Controller
 
 
     /**
-     * @return JsonResponse
+     * @OA\Delete(
+     *      path="/api/v1/users",
+     *      tags={"User"},
+     *      summary="유저 삭제",
+     *      description="유저 삭제",
+     *      operationId="destroy",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=204, description="successful operation"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     * )
      */
-    public function logout()
-    {
-        auth()->logout();
-//        return response()->json(['message' => 'Successfully logged out']);
-    }
-
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $this->user->delete();
+        return response()->json(null, 204);
     }
 }
