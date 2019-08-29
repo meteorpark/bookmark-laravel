@@ -119,7 +119,7 @@ class BookMarkCategoryController extends Controller
      * @OA\Post(
      *      path="/api/v1/category/{category_id}",
      *      tags={"Category"},
-     *      summary="카테고리명 수정 ------- 이거는 하지 마세요!!!!!! 작업 중",
+     *      summary="카테고리명 수정",
      *      description="카테고리명 수정",
      *      operationId="update",
      *      security={{"bearerAuth":{}}},
@@ -155,3 +155,4 @@ class BookMarkCategoryController extends Controller
         return response()->json($categories, 200);
     }
 }
+

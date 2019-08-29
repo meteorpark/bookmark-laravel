@@ -406,14 +406,18 @@
             },
             "BookmarkCategoryUpdate": {
                 "required": [
-                    "name"
+                    "name",
+                    "_method"
                 ],
                 "properties": {
                     "name": {
                         "type": "string"
                     },
                     "_method": {
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "PUT"
+                        ]
                     }
                 },
                 "type": "object",

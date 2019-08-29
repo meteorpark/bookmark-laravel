@@ -2,7 +2,7 @@
 
 
 /**
- * @OA\Schema(required={"name"}, @OA\Xml(name="BookmarkCategoryUpdate"))
+ * @OA\Schema(required={"name", "_method"}, @OA\Xml(name="BookmarkCategoryUpdate"))
  */
 class BookmarkCategoryUpdate
 {
@@ -14,7 +14,7 @@ class BookmarkCategoryUpdate
     public $name;
 
     /**
-     * @OA\Property()
+     * @OA\Property(enum={"PUT"})
      * @var string
      */
     public $_method;
