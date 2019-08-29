@@ -13,10 +13,6 @@
 */
 
 
-Route::get('unauthenticated', function () {
-    return response()->json(['status' => 'unauthenticated', 'errors' => new stdClass()], 401);
-})->name('unauthenticated');
-
 Route::group([
     'prefix' => 'v1',
     'middleware' => 'api',
@@ -39,8 +35,9 @@ Route::group([
     Route::get('/search', 'SearchController@index'); // 검색
 });
 
+Route::get('unauthenticated', function () {
+    return response()->json(['status' => 'unauthenticated', 'errors' => new stdClass()], 401);
+})->name('unauthenticated');
 
-
-
-
-
+Route::get('/terms', 'ViewController@terms'); // 이용약관
+Route::get('/privacy', 'ViewController@privacy'); // 개인정보보호

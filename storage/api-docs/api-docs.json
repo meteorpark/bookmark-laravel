@@ -444,6 +444,42 @@
                     }
                 ]
             }
+        },
+        "/api/terms": {
+            "get": {
+                "tags": [
+                    "WebView"
+                ],
+                "summary": "이용약관",
+                "description": "이용약관 웹뷰",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "not found page"
+                    }
+                }
+            }
+        },
+        "/api/privacy": {
+            "get": {
+                "tags": [
+                    "WebView"
+                ],
+                "summary": "개인정보보호",
+                "description": "개인정보 웹뷰",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "not found page"
+                    }
+                }
+            }
         }
     },
     "components": {
