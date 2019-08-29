@@ -99,7 +99,7 @@ class UserController extends Controller
      */
     public function login(loginRequest $request): JsonResponse
     {
-        $user = User::where('sns_id', $request->sns_id)->where('join_type', $request->join_type)->first();
+        $user = User::where('sns_id', $request->input('sns_id'))->where('join_type', $request->input('join_type'))->first();
 
         if ($user) {
             if (!$token = auth()->fromUser($user)) {

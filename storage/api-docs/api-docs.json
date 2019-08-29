@@ -300,6 +300,43 @@
                 ]
             }
         },
+        "/api/v1/search": {
+            "get": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "검색",
+                "description": "검색",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "검색어",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "bad request"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/users": {
             "post": {
                 "tags": [

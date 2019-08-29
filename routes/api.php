@@ -12,6 +12,7 @@
 |
 */
 
+
 Route::get('unauthenticated', function () {
     return response()->json(['status' => 'unauthenticated', 'errors' => new stdClass()], 401);
 })->name('unauthenticated');
@@ -35,6 +36,8 @@ Route::group([
     Route::post('/bookmarks/move', 'BookmarkController@move'); // 북마크 이동
     Route::get('/bookmarks/{category_id}', 'BookmarkController@index'); // 카테고리의 북마크들 가져오기
     Route::delete('/bookmarks/{category_id}/{bookmark_id}', 'BookmarkController@destroy'); // 북마크 삭제하기
+    Route::get('/search', 'SearchController@index'); // 검색
+
 });
 
 
