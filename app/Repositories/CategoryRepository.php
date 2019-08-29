@@ -36,7 +36,10 @@ class CategoryRepository implements CategoryRepositoryInterface
      */
     public function all(string $user_id)
     {
-        return BookmarkCategory::where('user_id', $user_id)->get();
+        $defaultBookCategory = BookmarkCategory::where('user_id', $user_id)->where('rank', 1)->get();
+        $otherBookCategory = BookmarkCategory::where('user_id', $user_id)->where('rank', '!=', 1)->orderBy('name', 'ASC')->get();
+
+        return $defaultBookCategory->merge($otherBookCategory);
     }
 
     /**
