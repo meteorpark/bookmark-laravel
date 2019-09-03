@@ -26,6 +26,8 @@ class CrawlerService
 
     private $tags = [];
 
+    private $crawler_data;
+
     /**
      * CrawlerService constructor.
      */
@@ -51,56 +53,121 @@ class CrawlerService
 
     /**
      * @param string $url
+     * @param bool $recursion
      * @return array
      */
-    public function crawler(string $url): array
+    public function crawler(string $url, bool $recursion = false): array
     {
+        echo $url."@";
         $this->url = $url;
+        $this->parsing();
+        $this->parser();
 
-        try {
+        if (!$this->tags['is_meta_tag'] && $recursion === false) {
 
-            $data = $this->parsing();
-            return $this->parser($data);
-
-        } catch (Exception $e) {
-
-            return $this->tags;
+            return $this->crawler($this->tags['url'], true);
         }
+//        print_r($this->tags);
+//        exit;
+        return $this->tags;
     }
 
-    /**
-     * @return Crawler
-     */
-    private function parsing(): Crawler
+    private function parsing()
     {
-        return $this->client->request("GET", $this->url);
+        $this->crawler_data = $this->client->request("GET", $this->url);
     }
 
     /**
      * @param Crawler $data
      * @return array
      */
-    private function parser(Crawler $data): array
+    private function parser(): array
     {
 
-        foreach (array_keys($this->tags) as $tag) {
+//        foreach (array_keys($this->tags) as $tag) {
+//
+//            try {
+//                $this->tags[$tag] = $data->filterXpath('//meta[@property="og:' . $tag . '"]')->attr('content');
+//                $this->tags['is_meta_tag'] = true;
+//
+//            } catch (Exception $e) {
+//
+//                if ($tag !== "is_meta_tag") {
+//                    $this->tags[$tag] = "";
+//                }
+//
+//                if ($tag === "site_name") {
+//                    $this->tags[$tag] = parse_url($this->url)['host'];
+//                }
+//            }
+//        }
 
-            try {
-                $this->tags[$tag] = $data->filterXpath('//meta[@property="og:' . $tag . '"]')->attr('content');
-                $this->tags['is_meta_tag'] = true;
-
-            } catch (Exception $e) {
-
-                if ($tag !== "is_meta_tag") {
-                    $this->tags[$tag] = "";
-                }
-
-                if ($tag === "site_name") {
-                    $this->tags[$tag] = parse_url($this->url)['host'];
-                }
-            }
-        }
+        $this->tags['site_name'] = $this->siteName();
+        $this->tags['title'] = $this->title();
+        $this->tags['image'] = $this->image();
+        $this->tags['url'] = $this->url();
+        $this->tags['description'] = $this->description();
 
         return $this->tags;
+    }
+
+
+    private function siteName(): string
+    {
+        try {
+            $site_name = $this->crawler_data->filterXpath('//meta[@property="og:site_name"]')->attr('content');
+            $this->tags['is_meta_tag'] = true;
+
+        } catch (Exception $e) {
+
+            $site_name = parse_url($this->url)['host'];
+        }
+        return $site_name;
+    }
+
+    private function title(): string
+    {
+        try {
+            $title = $this->crawler_data->filterXpath('//meta[@property="og:title"]')->attr('content');
+            $this->tags['is_meta_tag'] = true;
+
+        } catch (Exception $e) {
+
+            $title = $this->crawler_data->filterXpath('//title')->text();
+        }
+
+        return $title;
+    }
+
+    private function image(): string
+    {
+        try {
+            $image = $this->crawler_data->filterXpath('//meta[@property="og:image"]')->attr('content');
+            $this->tags['is_meta_tag'] = true;
+
+        } catch (Exception $e) {
+
+            $image = "";
+        }
+        return $image;
+    }
+
+    private function url(): string
+    {
+        return $this->tags['url'] = $this->crawler_data->getUri();
+    }
+
+    private function description(): string
+    {
+        try {
+            $description = $this->crawler_data->filterXpath('//meta[@property="og:description"]')->attr('content');
+            $this->tags['is_meta_tag'] = true;
+
+        } catch (Exception $e) {
+
+            $description = "";
+        }
+
+        return $description;
     }
 }

@@ -13,6 +13,12 @@
         },
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "",
+            "description": "REST API Host"
+        }
+    ],
     "paths": {
         "/api/v1/category": {
             "get": {

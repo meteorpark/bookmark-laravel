@@ -16,7 +16,10 @@
  *             url="http://www.apache.org/licenses/LICENSE-2.0.html"
  *         )
  *     ),
-
+ *     @OA\Server(
+ *         description="REST API Host",
+ *         url=""
+ *     ),
  *     @OA\ExternalDocumentation(
  *         description="Find out more about Swagger",
  *         url="http://swagger.io"
