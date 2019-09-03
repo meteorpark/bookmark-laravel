@@ -24,8 +24,13 @@ class CrawlerService
      */
     private $url;
 
+    /**
+     * @var array
+     */
     private $tags = [];
-
+    /**
+     * @var
+     */
     private $crawler_data;
 
     /**
@@ -53,27 +58,24 @@ class CrawlerService
 
     /**
      * @param string $url
-     * @param bool $recursion
      * @return array
      */
-    public function crawler(string $url, bool $recursion = false): array
+    public function crawler(string $url): array
     {
         $this->url = $url;
         $this->parsing();
         $this->parser();
-
-        if (!$this->tags['is_meta_tag'] && $recursion === false) { // short url 인경우 한번더 체크
-
-            return $this->crawler($this->tags['url'], true);
-        }
-        print_r($this->tags);
-        exit;
         return $this->tags;
     }
 
-    private function parsing()
+
+    /**
+     * @return bool
+     */
+    private function parsing(): bool
     {
         $this->crawler_data = $this->client->request("GET", $this->url);
+        return $this->client->getResponse()->getStatus() === 200;
     }
 
     /**
@@ -82,104 +84,71 @@ class CrawlerService
      */
     private function parser(): array
     {
-
-//        foreach (array_keys($this->tags) as $tag) {
-//
-//            try {
-//                $this->tags[$tag] = $data->filterXpath('//meta[@property="og:' . $tag . '"]')->attr('content');
-//                $this->tags['is_meta_tag'] = true;
-//
-//            } catch (Exception $e) {
-//
-//                if ($tag !== "is_meta_tag") {
-//                    $this->tags[$tag] = "";
-//                }
-//
-//                if ($tag === "site_name") {
-//                    $this->tags[$tag] = parse_url($this->url)['host'];
-//                }
-//            }
-//        }
-
         $this->tags['site_name'] = $this->siteName();
         $this->tags['title'] = $this->title();
         $this->tags['image'] = $this->image();
         $this->tags['url'] = $this->url();
         $this->tags['description'] = $this->description();
-
-        $this->iframe();
-
-        exit;
-
         return $this->tags;
     }
 
-    private function iframe()
-    {
-        foreach ($this->crawler_data as $iframe) {
-
-            if($iframe->name === "src"){
-                echo $iframe->value."@@@";
-            }
-        }
-    }
-
+    /**
+     * @return string
+     */
     private function siteName(): string
     {
         try {
             $site_name = $this->crawler_data->filterXpath('//meta[@property="og:site_name"]')->attr('content');
-            $this->tags['is_meta_tag'] = true;
-
         } catch (Exception $e) {
-
-            $site_name = parse_url($this->url)['host'];
+            $site_name = parse_url($this->crawler_data->getUri())['host'];
         }
         return $site_name;
     }
 
+    /**
+     * @return string
+     */
     private function title(): string
     {
         try {
             $title = $this->crawler_data->filterXpath('//meta[@property="og:title"]')->attr('content');
-            $this->tags['is_meta_tag'] = true;
-
         } catch (Exception $e) {
-
             $title = $this->crawler_data->filterXpath('//title')->text();
         }
-
         return $title;
     }
 
+    /**
+     * @return string
+     */
     private function image(): string
     {
         try {
             $image = $this->crawler_data->filterXpath('//meta[@property="og:image"]')->attr('content');
-            $this->tags['is_meta_tag'] = true;
-
         } catch (Exception $e) {
-
             $image = "";
         }
         return $image;
     }
 
+    /**
+     * @return string
+     */
     private function url(): string
     {
         return $this->tags['url'] = $this->crawler_data->getUri();
     }
 
+    /**
+     * @return string
+     */
     private function description(): string
     {
         try {
             $description = $this->crawler_data->filterXpath('//meta[@property="og:description"]')->attr('content');
-            $this->tags['is_meta_tag'] = true;
-
         } catch (Exception $e) {
-
             $description = "";
         }
-
         return $description;
     }
 }
