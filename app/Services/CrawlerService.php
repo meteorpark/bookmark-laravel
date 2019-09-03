@@ -58,17 +58,16 @@ class CrawlerService
      */
     public function crawler(string $url, bool $recursion = false): array
     {
-        echo $url."@";
         $this->url = $url;
         $this->parsing();
         $this->parser();
 
-        if (!$this->tags['is_meta_tag'] && $recursion === false) {
+        if (!$this->tags['is_meta_tag'] && $recursion === false) { // short url 인경우 한번더 체크
 
             return $this->crawler($this->tags['url'], true);
         }
-//        print_r($this->tags);
-//        exit;
+        print_r($this->tags);
+        exit;
         return $this->tags;
     }
 
@@ -108,9 +107,22 @@ class CrawlerService
         $this->tags['url'] = $this->url();
         $this->tags['description'] = $this->description();
 
+        $this->iframe();
+
+        exit;
+
         return $this->tags;
     }
 
+    private function iframe()
+    {
+        foreach ($this->crawler_data as $iframe) {
+
+            if($iframe->name === "src"){
+                echo $iframe->value."@@@";
+            }
+        }
+    }
 
     private function siteName(): string
     {
