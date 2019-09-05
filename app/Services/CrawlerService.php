@@ -80,7 +80,6 @@ class CrawlerService
     }
 
     /**
-     * @param Crawler $data
      * @return array
      */
     private function parser(): array
