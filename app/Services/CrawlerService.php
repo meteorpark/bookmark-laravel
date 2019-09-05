@@ -63,8 +63,9 @@ class CrawlerService
     public function crawler(string $url): array
     {
         $this->url = $url;
-        $this->parsing();
-        $this->parser();
+        if ($this->parsing()) {
+            $this->parser();
+        }
         return $this->tags;
     }
 
