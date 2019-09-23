@@ -66,7 +66,6 @@ class CrawlerService
         if ($this->parsing()) {
             $this->parser();
         }
-        dd($this->tags);
         return $this->tags;
     }
 
