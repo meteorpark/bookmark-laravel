@@ -26,7 +26,7 @@ class CrawlerServiceTest extends TestCase
     public function crawler_with_url()
     {
         $crawler = new CrawlerService();
-        $url = "http://naver.me/G7oy1tJP";
+        $url = "https://coding-factory.tistory.com/202";
         $data = $crawler->crawler($url);
         $this->assertIsArray($data);
     }

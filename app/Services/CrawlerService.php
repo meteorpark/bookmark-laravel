@@ -66,6 +66,7 @@ class CrawlerService
         if ($this->parsing()) {
             $this->parser();
         }
+        dd($this->tags);
         return $this->tags;
     }
 
@@ -99,6 +100,7 @@ class CrawlerService
     {
         try {
             $site_name = $this->crawler_data->filterXpath('//meta[@property="og:site_name"]')->attr('content');
+            $this->tags['is_meta_tag'] = true;
         } catch (Exception $e) {
             $site_name = parse_url($this->crawler_data->getUri())['host'];
         }
@@ -112,9 +114,15 @@ class CrawlerService
     {
         try {
             $title = $this->crawler_data->filterXpath('//meta[@property="og:title"]')->attr('content');
+            $this->tags['is_meta_tag'] = true;
         } catch (Exception $e) {
             $title = $this->crawler_data->filterXpath('//title')->text();
+
+            if (!empty($title)) {
+                $this->tags['is_meta_tag'] = true;
+            }
         }
+
         return $title;
     }
 
