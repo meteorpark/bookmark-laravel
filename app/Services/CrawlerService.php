@@ -55,6 +55,7 @@ class CrawlerService
         $this->client = new Client();
         $guzzleClient = new GuzzleClient([
             'timeout' => 3,
+            'verify' => getcwd().'/cacert-2019-08-28.pem',
         ]);
         $this->client->setClient($guzzleClient);
         $this->client->setHeader('User-Agent', "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6");
@@ -79,25 +80,39 @@ class CrawlerService
     {
         $this->org_url = $url;
         $this->url = $redirect_url ?: $url; // 네이버블로그 같은 경우 iframe으로 탐색해야 하는데, 원본 url을 유지하여 돌려주기 위함.
+
         if ($this->parsing()) {
             $this->parser();
+            if (!$this->hasTagsValue() && $this->hasIframeSrc() > 0 && $this->iframe_stat === false) {
 
-            if ($this->hasIframeSrc() > 0 && $this->iframe_stat === false) {
                 $this->iFrameSearch();
             }
         }
         return $this->tags;
     }
 
+    /**
+     * @return bool
+     */
+    private function hasTagsValue()
+    {
+        return $this->tags['title'] && $this->tags['image'];
+    }
 
     /**
      * @return bool
      */
     private function parsing(): bool
     {
-        $this->crawler_data = $this->client->request("GET", $this->url);
-        return $this->client->getResponse()->getStatus() === 200;
+
+        try {
+            $this->crawler_data = $this->client->request("GET", $this->url);
+            return $this->client->getResponse()->getStatus() === 200;
+        } catch (Exception $e) {
+            return 0;
+        }
     }
+
 
     /**
      * @return array
@@ -118,10 +133,11 @@ class CrawlerService
      */
     private function hasIframeSrc(): int
     {
-        $this->iframe_src = $this->crawler_data->filter('iframe')->each(function ($node) {
-            return $node->attr('src');
+        $this->iframe_src = $this->crawler_data->filter('iframe')->each(function ($item) {
+            return $item->attr('src');
         });
         $this->iframe_src = array_values(array_filter($this->iframe_src));
+
         return count($this->iframe_src);
     }
 
@@ -162,10 +178,15 @@ class CrawlerService
             $title = $this->crawler_data->filterXpath('//meta[@property="og:title"]')->attr('content');
             $this->tags['is_meta_tag'] = true;
         } catch (Exception $e) {
-            $title = $this->crawler_data->filterXpath('//title')->text();
 
-            if (!empty($title)) {
+            try {
+
+                $title = $this->crawler_data->filterXpath('//title')->text();
+
                 $this->tags['is_meta_tag'] = true;
+            } catch (Exception $e) {
+                $title = "";
+                $this->tags['is_meta_tag'] = false;
             }
         }
 
@@ -190,7 +211,7 @@ class CrawlerService
      */
     private function url(): string
     {
-        return $this->tags['url'] = $this->org_url;//$this->crawler_data->getUri();
+        return $this->tags['url'] = $this->org_url;
     }
 
     /**
