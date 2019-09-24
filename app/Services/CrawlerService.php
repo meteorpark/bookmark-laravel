@@ -25,6 +25,11 @@ class CrawlerService
     private $url;
 
     /**
+     * @var
+     */
+    private $org_url;
+
+    /**
      * @var array
      */
     private $tags = [];
@@ -32,6 +37,15 @@ class CrawlerService
      * @var
      */
     private $crawler_data;
+
+    /**
+     * @var array
+     */
+    private $iframe_src = [];
+    /**
+     * @var bool
+     */
+    private $iframe_stat = false;
 
     /**
      * CrawlerService constructor.
@@ -58,13 +72,19 @@ class CrawlerService
 
     /**
      * @param string $url
+     * @param string|null $redirect_url
      * @return array
      */
-    public function crawler(string $url): array
+    public function crawler(string $url, string $redirect_url = null): array
     {
-        $this->url = $url;
+        $this->org_url = $url;
+        $this->url = $redirect_url ?: $url; // 네이버블로그 같은 경우 iframe으로 탐색해야 하는데, 원본 url을 유지하여 돌려주기 위함.
         if ($this->parsing()) {
             $this->parser();
+
+            if ($this->hasIframeSrc() > 0 && $this->iframe_stat === false) {
+                $this->iFrameSearch();
+            }
         }
         return $this->tags;
     }
@@ -90,6 +110,33 @@ class CrawlerService
         $this->tags['url'] = $this->url();
         $this->tags['description'] = $this->description();
         return $this->tags;
+    }
+
+
+    /**
+     * @return int
+     */
+    private function hasIframeSrc(): int
+    {
+        $this->iframe_src = $this->crawler_data->filter('iframe')->each(function ($node) {
+            return $node->attr('src');
+        });
+        $this->iframe_src = array_values(array_filter($this->iframe_src));
+        return count($this->iframe_src);
+    }
+
+    /**
+     *
+     */
+    private function iFrameSearch()
+    {
+        for ($i = 0; $i < count($this->iframe_src); $i++) {
+            $this->iframe_stat = true;
+            $this->crawler($this->org_url, $this->iframe_src[$i]);
+
+            if ($this->tags['is_meta_tag']) break;
+        }
+        $this->iframe_stat = false;
     }
 
     /**
@@ -143,7 +190,7 @@ class CrawlerService
      */
     private function url(): string
     {
-        return $this->tags['url'] = $this->crawler_data->getUri();
+        return $this->tags['url'] = $this->org_url;//$this->crawler_data->getUri();
     }
 
     /**
