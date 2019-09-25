@@ -6,7 +6,6 @@ namespace App\Services;
 use Goutte\Client;
 use GuzzleHttp\Client as GuzzleClient;
 use Exception;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Class CrawlerService
@@ -55,7 +54,7 @@ class CrawlerService
         $this->client = new Client();
         $guzzleClient = new GuzzleClient([
             'timeout' => 3,
-            'verify' => getcwd().'/cacert-2019-08-28.pem',
+            'verify' => false,
         ]);
         $this->client->setClient($guzzleClient);
         $this->client->setHeader('User-Agent', "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6");
@@ -227,3 +226,4 @@ class CrawlerService
         return $description;
     }
 }
+

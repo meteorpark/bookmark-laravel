@@ -26,9 +26,8 @@ class CrawlerServiceTest extends TestCase
     public function crawler_with_url()
     {
         $crawler = new CrawlerService();
-        $url = "https://zetawiki.com/wiki/PHP_in_array()";
+        $url = "https://www.raywenderlich.com/5359-firebase-tutorial-real-time-chat";
         $data = $crawler->crawler($url);
-        dd($data);
         $this->assertIsArray($data);
     }
 }
