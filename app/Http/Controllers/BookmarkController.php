@@ -177,4 +177,27 @@ class BookmarkController extends Controller
 
         return response()->json(null, 200);
     }
+
+
+
+    /**
+     * @OA\Get(
+     *      path="/api/v1/bookmarks",
+     *      tags={"Bookmark"},
+     *      summary="북마크 전체보기",
+     *      description="북마크 전체보기",
+     *      operationId="show",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\Response(response=200, description="successful operation"),
+     *      @OA\Response(response=401, description="unauthorized token"),
+     * )
+     */
+    /**
+     * @return BookmarkCollection
+     */
+    public function show()
+    {
+        $bookmarks = $this->bookmarkService->show();
+        return new BookmarkCollection($bookmarks);
+    }
 }

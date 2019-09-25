@@ -34,8 +34,8 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/v1/users",
-     *      tags={"User"},
+     *      path="/api/v1/auth/signup",
+     *      tags={"Auth"},
      *      summary="회원가입",
      *      description="회원가입",
      *      operationId="store",
@@ -76,8 +76,8 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/v1/users/login",
-     *      tags={"User"},
+     *      path="/api/v1/auth/login",
+     *      tags={"Auth"},
      *      summary="로그인",
      *      description="로그인",
      *      operationId="login",
@@ -156,8 +156,8 @@ class UserController extends Controller
 
     /**
      * @OA\Delete(
-     *      path="/api/v1/users",
-     *      tags={"User"},
+     *      path="/api/v1/auth/unregister",
+     *      tags={"Auth"},
      *      summary="유저 삭제",
      *      description="유저 삭제",
      *      operationId="destroy",

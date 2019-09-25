@@ -156,6 +156,27 @@
             }
         },
         "/api/v1/bookmarks": {
+            "get": {
+                "tags": [
+                    "Bookmark"
+                ],
+                "summary": "북마크 전체보기",
+                "description": "북마크 전체보기",
+                "operationId": "show",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Bookmark"
@@ -343,10 +364,10 @@
                 ]
             }
         },
-        "/api/v1/users": {
+        "/api/v1/auth/signup": {
             "post": {
                 "tags": [
-                    "User"
+                    "Auth"
                 ],
                 "summary": "회원가입",
                 "description": "회원가입",
@@ -370,33 +391,12 @@
                         "description": "input error"
                     }
                 }
-            },
-            "delete": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "유저 삭제",
-                "description": "유저 삭제",
-                "operationId": "destroy",
-                "responses": {
-                    "204": {
-                        "description": "successful operation"
-                    },
-                    "401": {
-                        "description": "unauthorized token"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
-        "/api/v1/users/login": {
+        "/api/v1/auth/login": {
             "post": {
                 "tags": [
-                    "User"
+                    "Auth"
                 ],
                 "summary": "로그인",
                 "description": "로그인",
@@ -442,6 +442,29 @@
                     },
                     "409": {
                         "description": "unknown user"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/unregister": {
+            "delete": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "유저 삭제",
+                "description": "유저 삭제",
+                "operationId": "destroy",
+                "responses": {
+                    "204": {
+                        "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "unauthorized token"
                     }
                 },
                 "security": [

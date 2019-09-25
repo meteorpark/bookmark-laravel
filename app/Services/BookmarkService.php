@@ -91,4 +91,12 @@ class BookmarkService implements BookmarkServiceInterface
             $bookmark->save();
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function show()
+    {
+        return Bookmark::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate();
+    }
 }
