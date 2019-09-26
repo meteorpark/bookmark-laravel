@@ -60,12 +60,7 @@ class BookmarkService implements BookmarkServiceInterface
      */
     public function all(string $category_id)
     {
-        $bookmarkCategory = BookmarkCategory::findOrfail($category_id);
-
-        if ($bookmarkCategory) {
-
-            $bookmarkCategory->bookmarks()->orderBy('id', 'DESC')->paginate();
-        }
+        return BookmarkCategory::findOrfail($category_id)->bookmarks()->where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate();
     }
 
     /**

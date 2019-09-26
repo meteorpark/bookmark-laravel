@@ -34,6 +34,6 @@ class BookmarkCategory extends Model
      */
     public function bookmarks()
     {
-        return $this->hasMany(Bookmark::class, 'category_id', 'id');
+        return $this->hasMany(Bookmark::class, 'category_id');
     }
 }
