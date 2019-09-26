@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use \Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Class Handler
@@ -56,6 +57,15 @@ class Handler extends ExceptionHandler
                 'status' => $exception->getMessage(),
                 'errors' => new \stdClass(),
             ], 400);
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+
+            return response()->json([
+                'status' => 'record not found',
+                'errors' => '요청하신 정보에 문제가 있습니다.',
+            ], 404);
+
         }
         return parent::render($request, $exception);
     }

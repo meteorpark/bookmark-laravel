@@ -30,7 +30,7 @@ Route::group([
     Route::put('/category/{category_id}', 'BookMarkCategoryController@update'); // 카테고리 명 변경
     Route::delete('/category/{category_id}', 'BookMarkCategoryController@destroy'); // 카테고리 삭제
     Route::get('/bookmarks', 'BookmarkController@show'); // 북마크 전체보기
-    Route::post('/bookmarks', 'BookmarkController@store'); // 공유하기
+    Route::post('/bookmarks', 'BookmarkController@store'); // 북마크 저장하기
     Route::post('/bookmarks/move', 'BookmarkController@move'); // 북마크 이동
     Route::get('/bookmarks/{category_id}', 'BookmarkController@index'); // 카테고리의 북마크들 가져오기
     Route::delete('/bookmarks/{category_id}/{bookmark_id}', 'BookmarkController@destroy'); // 북마크 삭제하기

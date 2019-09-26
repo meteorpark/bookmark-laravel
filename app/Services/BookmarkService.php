@@ -19,16 +19,23 @@ class BookmarkService implements BookmarkServiceInterface
     /**
      * @param int $category_id
      * @param int $user_id
+     * @return mixed
      * @throws MeteoException
      */
     private function hasCategory(int $category_id, int $user_id)
     {
-        $bookCategory = BookmarkCategory::where('id', $category_id)->where('user_id', $user_id)->first();
+
+        if ($category_id === 0) {
+            $bookCategory = BookmarkCategory::where('user_id', $user_id)->orderBy('id', 'ASC')->first();
+        } else {
+            $bookCategory = BookmarkCategory::where('id', $category_id)->where('user_id', $user_id)->first();
+        }
 
         if (!$bookCategory) {
 
             throw new MeteoException("존재하지 않는 카테고리 입니다.");
         }
+        return $bookCategory->id;
     }
 
     /**
@@ -39,11 +46,10 @@ class BookmarkService implements BookmarkServiceInterface
     public function createBookmark(array $bookmark_data)
     {
         $user_id = auth()->user()->id;
-        $this->hasCategory($bookmark_data['category_id'], $user_id);
-
+        $category_id = $this->hasCategory($bookmark_data['category_id'], $user_id);
         return Bookmark::create([
             'user_id' => $user_id,
-            'category_id' => $bookmark_data['category_id'],
+            'category_id' => $category_id,
             'url' => $bookmark_data['url'],
         ]);
     }
@@ -54,16 +60,23 @@ class BookmarkService implements BookmarkServiceInterface
      */
     public function all(string $category_id)
     {
-        return BookmarkCategory::find($category_id)->bookmarks()->orderBy('id', 'DESC')->paginate();
+        $bookmarkCategory = BookmarkCategory::findOrfail($category_id);
+
+        if ($bookmarkCategory) {
+
+            $bookmarkCategory->bookmarks()->orderBy('id', 'DESC')->paginate();
+        }
     }
 
     /**
      * @param string $category_id
      * @param string $bookmark_id
      * @return mixed
+     * @throws MeteoException
      */
     public function delete(string $category_id, string $bookmark_id)
     {
+        $category_id = $this->hasCategory($category_id, auth()->user()->id);
         Bookmark::where('category_id', $category_id)->where('id', $bookmark_id)->where('user_id', auth()->user()->id)->delete();
     }
 
