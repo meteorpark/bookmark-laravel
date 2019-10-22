@@ -17,7 +17,7 @@ class Bookmark extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'category_id' => $this->category_id,
+            'category_id' => (string)$this->category_id,
             'url' => $this->url,
             'site_name' => (string)$this->site_name,
             'title' => (string)$this->title,

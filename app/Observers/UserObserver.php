@@ -17,7 +17,7 @@ class UserObserver
     {
         BookmarkCategory::create([
             'user_id' => $user->id,
-            'name' => 'default',
+            'name' => 'Basic',
             'rank' => 1,
         ]);
     }
