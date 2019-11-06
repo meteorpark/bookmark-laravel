@@ -49,4 +49,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getProfileImageAttribute($value)
+    {
+        return $value ?: "";
+    }
+
 }

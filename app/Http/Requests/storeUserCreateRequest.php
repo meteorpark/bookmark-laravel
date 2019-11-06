@@ -31,10 +31,10 @@ class storeUserCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'join_type' => 'required|in:kakao,facebook,google',
+            'join_type' => 'required|in:kakao,facebook,google,apple',
             'sns_id' => 'required',
             'name' => 'required',
-            'profile_image' => 'required',
+//            'profile_image' => 'required',
         ];
     }
 
@@ -45,7 +45,7 @@ class storeUserCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'join_type.required' => '허용 가능한 접근은 kakao, facebook, google 입니다.',
+            'join_type.required' => '허용 가능한 접근은 kakao, facebook, google, apple 입니다.',
         ];
     }
 

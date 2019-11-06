@@ -65,6 +65,9 @@ class UserController extends Controller
             $data['timezone'] = timezone();
             $user = $this->user->create($data);
         } else {
+
+            $user->name = $data['name'];
+            $user->profile_image = !empty($data['profile_image']) ?: "";
             $user->timezone = timezone();
             $user->save();
         }

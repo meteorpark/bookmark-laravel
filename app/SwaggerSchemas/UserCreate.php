@@ -2,13 +2,13 @@
 
 
 /**
- * @OA\Schema(required={"join_type", "sns_id", "profile_image", "name"}, @OA\Xml(name="UserCreate"))
+ * @OA\Schema(required={"join_type", "sns_id", "name"}, @OA\Xml(name="UserCreate"))
  */
 class UserCreate
 {
 
     /**
-     * @OA\Property(enum={"kakao", "facebook", "google"})
+     * @OA\Property(enum={"kakao", "facebook", "google", "apple"})
      * @var string
      */
     public $join_type;
@@ -17,11 +17,6 @@ class UserCreate
      * @var string
      */
     public $sns_id;
-    /**
-     * @OA\Property()
-     * @var string
-     */
-    public $profile_image;
     /**
      * @OA\Property()
      * @var string

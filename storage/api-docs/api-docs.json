@@ -588,7 +588,6 @@
                 "required": [
                     "join_type",
                     "sns_id",
-                    "profile_image",
                     "name"
                 ],
                 "properties": {
@@ -597,13 +596,11 @@
                         "enum": [
                             "kakao",
                             "facebook",
-                            "google"
+                            "google",
+                            "apple"
                         ]
                     },
                     "sns_id": {
-                        "type": "string"
-                    },
-                    "profile_image": {
                         "type": "string"
                     },
                     "name": {
@@ -626,7 +623,8 @@
                         "enum": [
                             "kakao",
                             "facebook",
-                            "google"
+                            "google",
+                            "apple"
                         ]
                     },
                     "sns_id": {
