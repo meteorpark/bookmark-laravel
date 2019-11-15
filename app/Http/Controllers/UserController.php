@@ -67,7 +67,7 @@ class UserController extends Controller
         } else {
 
             $user->name = $data['name'];
-            $user->profile_image = !empty($data['profile_image']) ?: "";
+            $user->profile_image = !empty($data['profile_image']) ? $data['profile_image'] : "";
             $user->timezone = timezone();
             $user->save();
         }
